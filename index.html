@@ -270,12 +270,17 @@
     width:100%;
     height:60vh;
     min-height:400px;
+    position:relative;
+    overflow:hidden;
+  }
+  .divider-banner::before{
+    content:'';
+    position:absolute;inset:0;
     background-image:url('images/divider-hoodie.jpg');
     background-size:cover;
     background-position:center;
-    position:relative;
-    overflow:hidden;
     filter:grayscale(1) contrast(1.1);
+    z-index:0;
   }
   .divider-banner::after{
     content:'';
