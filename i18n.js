@@ -43,6 +43,7 @@ window.I18N = {
     "srv.d3": "Visual strategy and consistent creative systems that shape a brand's voice across every touchpoint.",
     "contact.pre": "// Get in touch / 2026",
     "contact.massive": "let's make<br/>something <span class=\"accent\">good.</span>",
+    "band.cta": "let's make<br/>something good",
     "footer.built": "Built in Gold Coast, AU",
 
     "case.back": "← All work",
@@ -163,6 +164,7 @@ window.I18N = {
     "srv.d3": "Estrategia visual y sistemas creativos consistentes que moldean la voz de una marca en cada punto de contacto.",
     "contact.pre": "// Contacto / 2026",
     "contact.massive": "hagamos algo <span class=\"accent\">bueno.</span>",
+    "band.cta": "hagamos<br/>algo bueno",
     "footer.built": "Hecho en Gold Coast, AU",
 
     "case.back": "← Volver",
