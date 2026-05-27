@@ -3,6 +3,7 @@
 # ...excepto el sitio
 !/index.html
 !/case-*.html
+!/case.css
 !/images/
 !/.gitignore
 # basura de macOS
