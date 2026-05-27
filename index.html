@@ -875,17 +875,20 @@
     .scroll-cue{display:none}
     .divider-banner{height:36vh;min-height:240px}
     .divider-text{padding:24px}
+    .divider-text h3{font-size:clamp(28px,8.6vw,60px);max-width:100%;white-space:nowrap;line-height:1}
     /* secciones: menos relleno */
     .work,.about,.services,.contact{padding:72px 20px}
     .section-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:36px}
     .section-header>div:last-child{text-align:left!important;max-width:100%!important}
     .section-title{font-size:clamp(48px,15vw,82px)}
-    .filters{margin-bottom:32px}
-    .projects{gap:40px}
+    .filters{margin-bottom:32px;flex-wrap:nowrap;gap:6px;overflow-x:auto}
+    .filter{padding:8px 9px;font-size:9px;letter-spacing:0.08em;white-space:nowrap}
+    .projects{grid-template-columns:1fr;gap:36px}
     .project.size-lg,.project.size-md,.project.size-sm{grid-column:span 12}
     /* about: que el titulo no se encime */
-    .about-massive{font-size:clamp(40px,12vw,66px);line-height:1;margin-bottom:44px}
+    .about-massive{font-size:clamp(38px,11vw,60px);line-height:1.05;margin-bottom:40px}
     .about-grid{grid-template-columns:1fr;gap:32px}
+    .about-text{font-size:15px;line-height:1.55}
     .about-portrait{max-width:100%}
     .services-grid{grid-template-columns:1fr;gap:28px}
     .services-image{display:none}
