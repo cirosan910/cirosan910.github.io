@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulero Case Study / cirosan.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#5A377F;
+    --purple-deep:#3D1F5C;
+    --purple-dark:#2D1A40;
+    --bone:#FFFFFF;
+    --ink:#0A0A0B;
+    --tracking-tight:-0.04em;
+    --tracking-display:-0.06em;
+    --tracking-mono:0.15em;
+    --tracking-label:0.2em;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;cursor:none}
+  body{
+    font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
+    background:var(--purple);
+    color:var(--bone);
+    overflow-x:hidden;
+    font-weight:400;
+    line-height:1.5;
+  }
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    opacity:0.15;
+    pointer-events:none;
+    z-index:1000;
+    mix-blend-mode:overlay;
+  }
+  .cursor{
+    position:fixed;
+    width:14px;height:14px;
+    background:var(--bone);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    mix-blend-mode:difference;
+    transition:width .2s ease,height .2s ease;
+    transform:translate(-50%,-50%);
+  }
+  .cursor.hover{width:64px;height:64px;background:var(--ink);mix-blend-mode:normal}
+
+  nav{
+    position:fixed;top:0;left:0;right:0;
+    z-index:100;
+    padding:20px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12px;
+    letter-spacing:var(--tracking-mono);
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  nav .logo{height:24px;display:flex;align-items:center}
+  nav .logo img{height:100%;width:auto;display:block}
+  nav a{color:var(--bone);text-decoration:none}
+  nav .back{
+    border:1px solid var(--bone);
+    padding:8px 16px;
+    transition:all .2s ease;
+  }
+  nav .back:hover{background:var(--bone);color:var(--purple)}
+
+  .case-header{
+    padding:140px 32px 80px;
+    background:var(--purple);
+    position:relative;
+    border-bottom:1px solid rgba(240,237,230,0.25);
+  }
+  .case-header::before{
+    content:'';
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle,var(--purple-deep) 1px,transparent 1.5px);
+    background-size:18px 18px;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .case-breadcrumb{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:var(--tracking-label);
+    text-transform:uppercase;
+    opacity:0.7;
+    margin-bottom:32px;
+    position:relative;z-index:2;
+  }
+  .case-breadcrumb span{color:var(--ink);background:var(--bone);padding:2px 8px}
+  .case-title{
+    font-size:clamp(80px,18vw,260px);
+    font-weight:900;
+    line-height:0.82;
+    letter-spacing:var(--tracking-display);
+    text-transform:lowercase;
+    margin-bottom:40px;
+    position:relative;z-index:2;
+  }
+  .case-meta{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:32px;
+    padding-top:32px;
+    border-top:1px solid rgba(240,237,230,0.25);
+    position:relative;z-index:2;
+  }
+  .case-meta-item .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:var(--tracking-label);
+    text-transform:uppercase;
+    opacity:0.7;
+    margin-bottom:8px;
+  }
+  .case-meta-item .value{font-size:15px;font-weight:500}
+
+  .case-hero-img{
+    width:100%;
+    aspect-ratio:21/9;
+    background:#0a0a0a;
+    background-image:linear-gradient(180deg,transparent 0%,rgba(218,165,32,0.2) 50%,transparent 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 600'%3E%3Crect width='1400' height='600' fill='%23111'/%3E%3Ctext x='700' y='400' font-family='Arial Black' font-size='320' font-weight='900' fill='%23DAA520' text-anchor='middle' opacity='0.9'%3EG%3C/text%3E%3Crect x='0' y='0' width='40' height='600' fill='%23006400'/%3E%3Crect x='40' y='0' width='40' height='600' fill='%23DAA520'/%3E%3Crect x='80' y='0' width='40' height='600' fill='%23B22222'/%3E%3C/svg%3E");
+    background-size:cover;
+    background-position:center;
+    filter:grayscale(1) contrast(1.2);
+    position:relative;
+  }
+  .case-hero-img::after{
+    content:'';
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle,var(--ink) 0.8px,transparent 1.2px);
+    background-size:5px 5px;
+    mix-blend-mode:multiply;
+    opacity:0.4;
+  }
+
+  .case-section{
+    padding:120px 32px;
+    background:var(--purple);
+    color:var(--bone);
+    position:relative;
+  }
+  .case-section.dark{background:var(--ink);color:var(--bone)}
+  .case-section::before{
+    content:'';
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle,var(--purple-deep) 1px,transparent 1.5px);
+    background-size:18px 18px;
+    opacity:0.4;
+    pointer-events:none;
+  }
+  .case-section.dark::before{
+    background-image:radial-gradient(circle,var(--purple-dark) 1px,transparent 1.5px);
+    background-size:14px 14px;
+    opacity:0.6;
+  }
+  .case-section>*{position:relative;z-index:2}
+
+  .case-row{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:64px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .case-row-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:var(--tracking-label);
+    text-transform:uppercase;
+    opacity:0.7;
+    padding-top:12px;
+  }
+  .case-h2{
+    font-size:clamp(40px,6vw,80px);
+    font-weight:900;
+    line-height:0.95;
+    letter-spacing:var(--tracking-display);
+    text-transform:lowercase;
+    margin-bottom:40px;
+  }
+  .case-h2 em{
+    font-style:normal;
+    background:var(--ink);
+    color:var(--bone);
+    padding:0 10px;
+  }
+  .case-section.dark .case-h2 em{background:var(--purple);color:var(--bone)}
+  .case-body{font-size:19px;line-height:1.6;max-width:680px}
+  .case-body p{margin-bottom:24px}
+  .case-body strong{
+    background:var(--ink);
+    color:var(--bone);
+    padding:0 6px;
+    font-weight:500;
+  }
+  .case-section.dark .case-body strong{background:var(--purple);color:var(--bone)}
+
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:24px;
+    padding:0 32px;
+    max-width:1600px;
+    margin:0 auto 120px;
+    position:relative;
+    z-index:2;
+  }
+  .gallery-img{
+    background:#111;
+    overflow:hidden;
+    position:relative;
+    filter:grayscale(1) contrast(1.2);
+  }
+  .gallery-img::after{
+    content:'';
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle,var(--ink) 0.8px,transparent 1.2px);
+    background-size:4px 4px;
+    mix-blend-mode:multiply;
+    opacity:0.4;
+  }
+  .gallery-img.span-6{grid-column:span 6;aspect-ratio:4/5}
+  .gallery-img.span-12{grid-column:span 12;aspect-ratio:21/9}
+  .gallery-img.span-4{grid-column:span 4;aspect-ratio:1/1}
+  .gallery-img.span-8{grid-column:span 8;aspect-ratio:4/3}
+
+  .g-packaging{background:linear-gradient(135deg,#1a1a1a 0%,#000 100%);position:relative}
+  .g-packaging::before{
+    content:'GULERO';
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:#DAA520;
+    font-size:80px;font-weight:900;
+    z-index:1;
+  }
+  .g-skate{background:linear-gradient(180deg,#0a0a0a 0%,#1a1a1a 100%);position:relative}
+  .g-skate::before{
+    content:'NO APTO PARA TIBIOS';
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-size:32px;font-weight:900;
+    text-align:center;line-height:1;padding:24px;
+  }
+  .g-stripes{background:linear-gradient(90deg,#006400 0%,#006400 33%,#DAA520 33%,#DAA520 66%,#B22222 66%,#B22222 100%)}
+  .g-product{background:#000;position:relative}
+  .g-product::before{
+    content:'CHOCO CHILL';
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-size:36px;font-weight:900;
+    line-height:0.9;text-align:center;padding:16px;
+  }
+
+  .results-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+    margin-top:40px;
+  }
+  .result-card{
+    border:1px solid rgba(240,237,230,0.25);
+    padding:32px;
+  }
+  .result-num{
+    font-size:72px;
+    font-weight:900;
+    letter-spacing:var(--tracking-display);
+    line-height:1;
+    margin-bottom:16px;
+    color:var(--bone);
+  }
+  .result-label{font-size:13px;line-height:1.5;opacity:0.85}
+
+  .next-project{
+    padding:140px 32px;
+    background:var(--purple);
+    text-align:center;
+    border-top:1px solid rgba(240,237,230,0.25);
+    position:relative;
+  }
+  .next-project::before{
+    content:'';
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle,var(--purple-deep) 1px,transparent 1.5px);
+    background-size:18px 18px;
+    opacity:0.4;
+    pointer-events:none;
+  }
+  .next-project>*{position:relative;z-index:2}
+  .next-pre{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:var(--tracking-label);
+    text-transform:uppercase;
+    opacity:0.7;
+    margin-bottom:24px;
+  }
+  .next-title{
+    font-size:clamp(60px,12vw,180px);
+    font-weight:900;
+    line-height:0.85;
+    letter-spacing:var(--tracking-display);
+    text-transform:lowercase;
+    margin-bottom:32px;
+  }
+  .next-title a{
+    color:var(--bone);
+    text-decoration:none;
+    transition:all .3s ease;
+  }
+  .next-title a:hover{color:var(--ink);transform:skew(-3deg);display:inline-block}
+  .next-arrow{
+    font-size:48px;
+    color:var(--ink);
+    animation:bounce-h 2s ease-in-out infinite;
+  }
+  @keyframes bounce-h{
+    0%,100%{transform:translateX(0)}
+    50%{transform:translateX(12px)}
+  }
+
+  footer.main{
+    padding:24px 32px;
+    background:var(--purple);
+    border-top:1px solid rgba(240,237,230,0.25);
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    letter-spacing:var(--tracking-mono);
+    text-transform:uppercase;
+    opacity:0.7;
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  a,button{cursor:none}
+
+  @media (max-width:900px){
+    nav{padding:14px 20px}
+    .case-header,.case-section,.next-project{padding-left:20px;padding-right:20px}
+    .case-meta{grid-template-columns:1fr 1fr;gap:20px}
+    .case-row{grid-template-columns:1fr;gap:24px}
+    .gallery{padding:0 20px;gap:16px}
+    .gallery-img.span-4,.gallery-img.span-6,.gallery-img.span-8{grid-column:span 12}
+    .results-grid{grid-template-columns:1fr}
+  }
+  /* placeholders neutros - reemplazar por piezas reales de Gulero */
+  .case-hero-img,.gallery-img{
+    background:var(--purple-deep)!important;
+    background-image:radial-gradient(circle,var(--ink) 0.8px,transparent 1.4px)!important;
+    background-size:6px 6px!important;
+    position:relative;
+  }
+  .ph-label{
+    position:absolute;bottom:12px;left:12px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    background:var(--ink);color:var(--bone);padding:5px 9px;z-index:3;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo"><img src="images/logo-white.png" alt="cirosan."></a>
+  <a href="index.html" class="back">← All work</a>
+</nav>
+
+<section class="case-header">
+  <div class="case-breadcrumb">/ Work / <span>Branding</span> / Gulero</div>
+  <h1 class="case-title">gulero.</h1>
+  <div class="case-meta">
+    <div class="case-meta-item">
+      <div class="label">// Client</div>
+      <div class="value">Gulero</div>
+    </div>
+    <div class="case-meta-item">
+      <div class="label">// Year</div>
+      <div class="value">2023</div>
+    </div>
+    <div class="case-meta-item">
+      <div class="label">// Role</div>
+      <div class="value">Brand Identity & System</div>
+    </div>
+    <div class="case-meta-item">
+      <div class="label">// Category</div>
+      <div class="value">Food / Packaging</div>
+    </div>
+  </div>
+</section>
+
+<div class="case-hero-img"><span class="ph-label">// GULERO_01</span></div>
+
+<section class="case-section">
+  <div class="case-row">
+    <div class="case-row-label">// 01 / Context</div>
+    <div>
+      <h2 class="case-h2">break the <em>alfajor</em> mold.</h2>
+      <div class="case-body">
+        <p>Gulero needed a <strong>bold and irreverent brand</strong> in a category dominated by safe, family-friendly visuals: pastel colors, soft type, predictable packaging.</p>
+        <p>The brief was simple but ambitious: build a voice that breaks from tradition entirely. Urban, fun, unapologetic. Something that didn't try to please everyone, just to be real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section dark">
+  <div class="case-row">
+    <div class="case-row-label">// 02 / Approach</div>
+    <div>
+      <h2 class="case-h2">street culture meets <em>chocolate.</em></h2>
+      <div class="case-body">
+        <p>I built the visual system around <strong>street aesthetics</strong>, pulling references from skate culture, graffiti, and Rasta color codes. The logo uses a custom display type that reads as both editorial and rebellious.</p>
+        <p>The palette is loud on purpose: green, gold, red, and black, layered with humor and irreverence across every touchpoint.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gallery">
+  <div class="gallery-img span-6 g-packaging"><span class="ph-label">// IMG_01</span></div>
+  <div class="gallery-img span-6 g-skate"><span class="ph-label">// IMG_02</span></div>
+  <div class="gallery-img span-12 g-stripes"><span class="ph-label">// IMG_03</span></div>
+  <div class="gallery-img span-4 g-product"><span class="ph-label">// IMG_04</span></div>
+  <div class="gallery-img span-8 g-packaging"><span class="ph-label">// IMG_05</span></div>
+</div>
+
+<section class="case-section">
+  <div class="case-row">
+    <div class="case-row-label">// 03 / Outcome</div>
+    <div>
+      <h2 class="case-h2">a brand with <em>attitude.</em></h2>
+      <div class="case-body">
+        <p>From logo and packaging to campaign design and merch (yes, the skate deck is real), every piece reinforces the same voice: <strong>fun, rebellious, and unapologetic</strong>.</p>
+        <p>A brand identity that connects with a generation that doesn't want to be sold to, they want to be in on the joke.</p>
+      </div>
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-num">12+</div>
+          <div class="result-label">Packaging variants across product lines</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">100%</div>
+          <div class="result-label">Custom illustration & type system</div>
+        </div>
+        <div class="result-card">
+          <div class="result-num">∞</div>
+          <div class="result-label">Brand personality unlocked</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next-project">
+  <div class="next-pre">// Next project</div>
+  <h2 class="next-title">
+    <a href="index.html">ruda <span class="next-arrow">→</span></a>
+  </h2>
+</section>
+
+<footer class="main">
+  <div>© 2026 · cirosan.</div>
+  <div>Built in Gold Coast, AU</div>
+</footer>
+
+<script>
+  const cursor=document.getElementById('cursor');
+  let mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  function loop(){
+    cx+=(mx-cx)*0.2;cy+=(my-cy)*0.2;
+    cursor.style.left=cx+'px';cursor.style.top=cy+'px';
+    requestAnimationFrame(loop);
+  }
+  loop();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
+  });
+</script>
+</body>
+</html>

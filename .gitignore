@@ -2,6 +2,7 @@
 /*
 # ...excepto el sitio
 !/index.html
+!/case-*.html
 !/images/
 !/.gitignore
 # basura de macOS
