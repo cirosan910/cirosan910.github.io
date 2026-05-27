@@ -62,6 +62,11 @@ nav .back{
   transition:all .2s ease;
 }
 nav .back:hover{background:var(--bone);color:var(--purple)}
+.nav-left{display:flex;align-items:center;gap:18px}
+.lang-toggle{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em}
+.lang-opt{cursor:none;opacity:0.45;transition:opacity .2s ease}
+.lang-opt.active{opacity:1;text-decoration:underline;text-underline-offset:3px}
+.lang-sep{opacity:0.35}
 
 .case-header{
   padding:140px 32px 80px;
