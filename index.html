@@ -885,37 +885,38 @@
     opacity:0.85;
   }
   .contact-form{
-    max-width:600px;
+    max-width:640px;
     margin:0 auto 56px;
-    display:flex;
-    flex-direction:column;
-    gap:26px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:26px 28px;
     text-align:left;
     background:rgba(10,10,11,0.32);
     border:1px solid rgba(255,255,255,0.14);
     padding:44px;
   }
+  .contact-form .full{grid-column:1 / -1}
   .contact-form input,.contact-form textarea{
     background:transparent;
     border:0;
-    border-bottom:1px solid rgba(255,255,255,0.35);
+    border-bottom:2px solid rgba(255,255,255,0.45);
     color:var(--bone);
     font-family:inherit;
     font-size:18px;
-    padding:14px 2px;
+    padding:12px 2px;
     width:100%;
     resize:vertical;
     transition:border-color .2s ease;
   }
   .contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,0.5)}
   .contact-form input:focus,.contact-form textarea:focus{outline:none;border-bottom-color:var(--bone)}
-  .form-field{display:flex;flex-direction:column;gap:12px}
+  .form-field{display:flex;flex-direction:column;gap:10px}
   .form-label{
     font-family:'JetBrains Mono',monospace;
-    font-size:11px;
+    font-size:12px;
     letter-spacing:var(--tracking-label);
     text-transform:uppercase;
-    opacity:0.6;
+    opacity:0.8;
   }
   .form-chips{display:flex;flex-wrap:wrap;gap:8px}
   .chip{cursor:none}
@@ -1043,7 +1044,7 @@
     .service{grid-template-columns:40px 1fr;gap:16px;padding:28px 0}
     .screen-band{height:42vh;min-height:300px}
     .contact-massive{font-size:clamp(52px,15vw,92px)}
-    .contact-form{padding:24px;gap:20px}
+    .contact-form{grid-template-columns:1fr;padding:24px;gap:20px}
     .contact-links{flex-direction:column;gap:16px}
   }
 </style>
@@ -1314,9 +1315,19 @@
     <input type="hidden" name="access_key" value="93880a03-a5f9-4ae8-b73f-df55fc80b0d5">
     <input type="hidden" name="subject" value="Nuevo mensaje desde cirosan.">
     <input type="hidden" name="from_name" value="cirosan. portfolio">
-    <input type="text" name="name" required placeholder="Name" data-i18n-ph="form.name" aria-label="Name">
-    <input type="email" name="email" required placeholder="Email" data-i18n-ph="form.email" aria-label="Email">
     <div class="form-field">
+      <span class="form-label" data-i18n="form.name">Name</span>
+      <input type="text" name="name" required aria-label="Name">
+    </div>
+    <div class="form-field">
+      <span class="form-label" data-i18n="form.email">Email</span>
+      <input type="email" name="email" required aria-label="Email">
+    </div>
+    <div class="form-field full">
+      <span class="form-label" data-i18n="form.company">Company / Business</span>
+      <input type="text" name="company" aria-label="Company / Business">
+    </div>
+    <div class="form-field full">
       <span class="form-label" data-i18n="form.tlabel">What do you need? (optional)</span>
       <div class="form-chips">
         <label class="chip"><input type="radio" name="project" value="Branding"><span data-i18n="form.t1">Branding</span></label>
@@ -1325,9 +1336,12 @@
         <label class="chip"><input type="radio" name="project" value="Other"><span data-i18n="form.t4">Other</span></label>
       </div>
     </div>
-    <textarea name="message" rows="4" required placeholder="What are you building?" data-i18n-ph="form.message" aria-label="Message"></textarea>
-    <button type="submit" data-i18n="form.submit">Send message</button>
-    <p class="form-status" id="form-status" role="status"></p>
+    <div class="form-field full">
+      <span class="form-label" data-i18n="form.mlabel">Message</span>
+      <textarea name="message" rows="4" required placeholder="What are you building?" data-i18n-ph="form.message" aria-label="Message"></textarea>
+    </div>
+    <button class="full" type="submit" data-i18n="form.submit">Send message</button>
+    <p class="form-status full" id="form-status" role="status"></p>
   </form>
   <div class="contact-links">
     <a href="mailto:ciroccoposada@gmail.com">Email</a>
