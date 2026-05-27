@@ -854,13 +854,46 @@
     color:var(--bone);
     padding:0 12px;
   }
+  .contact-sub{
+    text-align:center;
+    margin-bottom:36px;
+  }
+  .contact-sub .avail{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:var(--tracking-label);
+    text-transform:uppercase;
+    opacity:0.85;
+  }
+  .avail-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#8FCB5C;
+    box-shadow:0 0 0 0 rgba(143,203,92,0.6);
+    animation:availpulse 1.8s ease-in-out infinite;
+  }
+  @keyframes availpulse{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.4;transform:scale(1.3)}
+  }
+  .contact-sub p{
+    margin:14px auto 0;
+    max-width:440px;
+    font-size:15px;
+    opacity:0.85;
+  }
   .contact-form{
-    max-width:520px;
-    margin:48px auto 56px;
+    max-width:600px;
+    margin:0 auto 56px;
     display:flex;
     flex-direction:column;
-    gap:22px;
+    gap:26px;
     text-align:left;
+    background:rgba(10,10,11,0.32);
+    border:1px solid rgba(255,255,255,0.14);
+    padding:44px;
   }
   .contact-form input,.contact-form textarea{
     background:transparent;
@@ -868,14 +901,37 @@
     border-bottom:1px solid rgba(255,255,255,0.35);
     color:var(--bone);
     font-family:inherit;
-    font-size:16px;
-    padding:12px 2px;
+    font-size:18px;
+    padding:14px 2px;
     width:100%;
     resize:vertical;
     transition:border-color .2s ease;
   }
   .contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,0.5)}
   .contact-form input:focus,.contact-form textarea:focus{outline:none;border-bottom-color:var(--bone)}
+  .form-field{display:flex;flex-direction:column;gap:12px}
+  .form-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:var(--tracking-label);
+    text-transform:uppercase;
+    opacity:0.6;
+  }
+  .form-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{cursor:none}
+  .chip input{position:absolute;opacity:0;width:0;height:0}
+  .chip span{
+    display:inline-block;
+    padding:9px 15px;
+    border:1px solid rgba(255,255,255,0.35);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    transition:all .2s ease;
+  }
+  .chip:hover span{border-color:var(--bone)}
+  .chip input:checked + span{background:var(--bone);color:var(--purple);border-color:var(--bone)}
   .contact-form button{
     align-self:flex-start;
     margin-top:8px;
@@ -883,11 +939,11 @@
     border:1px solid var(--bone);
     color:var(--bone);
     font-family:inherit;
-    font-size:13px;
+    font-size:14px;
     letter-spacing:var(--tracking-mono);
     text-transform:uppercase;
     font-weight:500;
-    padding:14px 28px;
+    padding:16px 34px;
     cursor:none;
     transition:all .2s ease;
   }
@@ -987,6 +1043,7 @@
     .service{grid-template-columns:40px 1fr;gap:16px;padding:28px 0}
     .screen-band{height:42vh;min-height:300px}
     .contact-massive{font-size:clamp(52px,15vw,92px)}
+    .contact-form{padding:24px;gap:20px}
     .contact-links{flex-direction:column;gap:16px}
   }
 </style>
@@ -1249,13 +1306,26 @@
   <div class="ghost ghost-contact"><img src="images/ghost-05.png" alt=""></div>
   <div class="contact-pre" data-i18n="contact.pre">// Get in touch / 2026</div>
   <h2 class="contact-massive" data-i18n="contact.massive">let's <span class="accent">talk.</span></h2>
+  <div class="contact-sub">
+    <span class="avail"><span class="avail-dot"></span><span data-i18n="form.avail">Available for projects · 2026</span></span>
+    <p data-i18n="contact.sub">Got a project? Tell me about it, I reply within 48h.</p>
+  </div>
   <form class="contact-form" id="form" action="https://api.web3forms.com/submit" method="POST">
     <input type="hidden" name="access_key" value="93880a03-a5f9-4ae8-b73f-df55fc80b0d5">
     <input type="hidden" name="subject" value="Nuevo mensaje desde cirosan.">
     <input type="hidden" name="from_name" value="cirosan. portfolio">
     <input type="text" name="name" required placeholder="Name" data-i18n-ph="form.name" aria-label="Name">
     <input type="email" name="email" required placeholder="Email" data-i18n-ph="form.email" aria-label="Email">
-    <textarea name="message" rows="4" required placeholder="Message" data-i18n-ph="form.message" aria-label="Message"></textarea>
+    <div class="form-field">
+      <span class="form-label" data-i18n="form.tlabel">What do you need? (optional)</span>
+      <div class="form-chips">
+        <label class="chip"><input type="radio" name="project" value="Branding"><span data-i18n="form.t1">Branding</span></label>
+        <label class="chip"><input type="radio" name="project" value="AI Visuals"><span data-i18n="form.t2">AI Visuals</span></label>
+        <label class="chip"><input type="radio" name="project" value="Creative Direction"><span data-i18n="form.t3">Creative Direction</span></label>
+        <label class="chip"><input type="radio" name="project" value="Other"><span data-i18n="form.t4">Other</span></label>
+      </div>
+    </div>
+    <textarea name="message" rows="4" required placeholder="What are you building?" data-i18n-ph="form.message" aria-label="Message"></textarea>
     <button type="submit" data-i18n="form.submit">Send message</button>
     <p class="form-status" id="form-status" role="status"></p>
   </form>
