@@ -378,13 +378,13 @@
 
   .work-bg-sunburst{
     position:absolute;
-    width:600px;height:600px;
-    top:80px;right:-100px;
-    opacity:0.12;
+    width:clamp(280px,28vw,460px);
+    top:60px;right:-30px;
+    opacity:0.5;
     z-index:1;
     pointer-events:none;
   }
-  .work-bg-sunburst img{width:100%;filter:brightness(0) invert(1)}
+  .work-bg-sunburst img{width:100%;display:block}
 
   .section-header{
     display:flex;
@@ -853,16 +853,15 @@
     position:absolute;
     pointer-events:none;
     z-index:1;
-    opacity:0.13;
-    filter:brightness(0) invert(1);
+    opacity:0.5;
     width:clamp(260px,30vw,520px);
   }
   .ghost img{width:100%;display:block}
-  .ghost-hero{right:34%;bottom:6%;opacity:0.10;width:clamp(200px,22vw,360px)}
+  .ghost-hero{right:34%;bottom:6%;width:clamp(200px,22vw,360px)}
   .ghost-work{left:-30px;top:44%}
-  .ghost-about{left:1%;bottom:4%;opacity:0.10}
+  .ghost-about{left:1%;bottom:4%}
   .ghost-services{right:3%;bottom:0}
-  .ghost-contact{left:50%;top:26%;transform:translateX(-50%);opacity:0.08;width:clamp(280px,34vw,560px)}
+  .ghost-contact{left:50%;top:26%;transform:translateX(-50%);width:clamp(280px,34vw,560px)}
 
   @media (max-width:900px){
     .ghost-hero,.ghost-work{display:none}
@@ -959,7 +958,7 @@
 </div>
 
 <section class="work" id="work">
-  <div class="work-bg-sunburst"><img src="images/elements/sunburst_big.svg" alt=""></div>
+  <div class="work-bg-sunburst"><img src="images/ghost-01.png" alt=""></div>
   <div class="ghost ghost-work"><img src="images/ghost-03.png" alt=""></div>
   <div class="section-header">
     <div>
