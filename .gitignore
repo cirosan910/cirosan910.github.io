@@ -1,0 +1,9 @@
+# Ignorar todo el root...
+/*
+# ...excepto el sitio
+!/index.html
+!/images/
+!/.gitignore
+# basura de macOS
+._*
+.DS_Store
