@@ -108,6 +108,7 @@
     gap:48px;
     align-items:stretch;
     position:relative;
+    overflow:hidden;
     background:var(--purple);
   }
   .hero::before{
@@ -365,6 +366,7 @@
     background:var(--purple);
     color:var(--bone);
     position:relative;
+    overflow:hidden;
   }
   .work::before{
     content:'';
@@ -674,6 +676,7 @@
     background:var(--purple);
     color:var(--bone);
     position:relative;
+    overflow:hidden;
   }
   .services::before{
     content:'';
@@ -763,7 +766,16 @@
     color:var(--bone);
     text-align:center;
     position:relative;
+    overflow:hidden;
     border-top:1px solid rgba(255,255,255,0.25);
+  }
+
+  .screen-band{
+    width:100%;
+    height:70vh;
+    min-height:480px;
+    background:url('images/cirosan-screen.png') center/cover no-repeat;
+    position:relative;
   }
   .contact::before{
     content:'';
@@ -910,7 +922,6 @@
 
     <div class="hero-slogan">
       <h1>made to be<span class="felt">felt.</span></h1>
-      <div class="hero-asterisk"><img src="images/elements/asterisk.svg" alt=""></div>
     </div>
 
     <div class="hero-bottom">
@@ -919,7 +930,6 @@
       </p>
       <div class="scroll-cue">
         <span>Scroll<br/>to see work</span>
-        <div class="arrow-down"><img src="images/elements/arrow.svg" alt=""></div>
       </div>
     </div>
   </div>
@@ -928,13 +938,10 @@
     <div class="hero-image-label">// IMG_001</div>
   </div>
 
-  <div class="star-decor star-1"><img src="images/elements/star.svg" alt=""></div>
-  <div class="star-decor star-2"><img src="images/elements/star.svg" alt=""></div>
   <div class="ghost ghost-hero"><img src="images/ghost-01.png" alt=""></div>
 </section>
 
 <section class="divider-banner">
-  <div class="divider-sunburst"><img src="images/elements/sunburst_big.svg" alt=""></div>
   <div class="divider-text">
     <h3>design that <span class="accent">hits.</span></h3>
   </div>
@@ -942,23 +949,22 @@
 
 <div class="marquee">
   <div class="marquee-track">
-    <span>Brand Identity <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>AI Visuals <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Creative Direction <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Editorial Design <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Packaging <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Campaign <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Brand Identity <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>AI Visuals <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Creative Direction <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Editorial Design <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Packaging <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
-    <span>Campaign <span class="ast"><img src="images/elements/star.svg" alt=""></span></span>
+    <span>Brand Identity ·</span>
+    <span>AI Visuals ·</span>
+    <span>Creative Direction ·</span>
+    <span>Editorial Design ·</span>
+    <span>Packaging ·</span>
+    <span>Campaign ·</span>
+    <span>Brand Identity ·</span>
+    <span>AI Visuals ·</span>
+    <span>Creative Direction ·</span>
+    <span>Editorial Design ·</span>
+    <span>Packaging ·</span>
+    <span>Campaign ·</span>
   </div>
 </div>
 
 <section class="work" id="work">
-  <div class="work-bg-sunburst"><img src="images/ghost-01.png" alt=""></div>
   <div class="ghost ghost-work"><img src="images/ghost-03.png" alt=""></div>
   <div class="section-header">
     <div>
@@ -985,9 +991,7 @@
           <div class="pname">gulero.</div>
         </div>
         <span class="project-num">01 / Branding</span>
-        <span class="project-tag">Identity</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag">Identity</span>      </div>
       <div class="project-info">
         <div class="project-name">Gulero — Alfajor Brand</div>
         <div class="project-meta">2023 · Identity</div>
@@ -1001,9 +1005,7 @@
           <div class="pname">ruda</div>
         </div>
         <span class="project-num">02 / Branding</span>
-        <span class="project-tag">Identity</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag">Identity</span>      </div>
       <div class="project-info">
         <div class="project-name">Ruda E-Bikes</div>
         <div class="project-meta">2024 · Brand System</div>
@@ -1017,9 +1019,7 @@
           <div class="pname">tāyati</div>
         </div>
         <span class="project-num">03 / Branding</span>
-        <span class="project-tag">Identity</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag">Identity</span>      </div>
       <div class="project-info">
         <div class="project-name">tāyati</div>
         <div class="project-meta">2024 · Branding & Packaging</div>
@@ -1033,9 +1033,7 @@
           <div class="pname">san<br/>alfonso</div>
         </div>
         <span class="project-num">04 / AI</span>
-        <span class="project-tag ai">AI</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag ai">AI</span>      </div>
       <div class="project-info">
         <div class="project-name">San Alfonso</div>
         <div class="project-meta">2025 · AI Campaign</div>
@@ -1049,9 +1047,7 @@
           <div class="pname">roam v</div>
         </div>
         <span class="project-num">05 / AI</span>
-        <span class="project-tag ai">AI</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag ai">AI</span>      </div>
       <div class="project-info">
         <div class="project-name">ROAM V</div>
         <div class="project-meta">2026 · AI Content</div>
@@ -1065,9 +1061,7 @@
           <div class="pname">sellink</div>
         </div>
         <span class="project-num">06 / AI</span>
-        <span class="project-tag ai">AI</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag ai">AI</span>      </div>
       <div class="project-info">
         <div class="project-name">Sellink Agency</div>
         <div class="project-meta">2024 · AI Direction</div>
@@ -1081,9 +1075,7 @@
           <div class="pname">los pumas</div>
         </div>
         <span class="project-num">07 / Creative Direction</span>
-        <span class="project-tag">Direction</span>
-        <div class="project-arrow"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        <span class="project-tag">Direction</span>      </div>
       <div class="project-info">
         <div class="project-name">Los Pumas — National Rugby Team</div>
         <div class="project-meta">2024 · Sports / Creative Direction</div>
@@ -1093,7 +1085,6 @@
 </section>
 
 <section class="about" id="about">
-  <div class="about-eye"><img src="images/elements/eye.svg" alt=""></div>
   <div class="ghost ghost-about"><img src="images/ghost-02.png" alt=""></div>
   <div class="about-content">
     <h2 class="about-massive">
@@ -1147,32 +1138,27 @@
         <div class="service-body">
           <div class="service-name">brand & identity</div>
           <div class="service-desc">Logos, visual systems, packaging, and guidelines built to give a brand character and clarity from day one.</div>
-        </div>
-        <div class="service-arrow-icon"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        </div>      </div>
       <div class="service">
         <div class="service-num">02 /</div>
         <div class="service-body">
           <div class="service-name">ai visual content</div>
           <div class="service-desc">AI as a creative tool — fast, aesthetic, and unique visuals that stay authentic to the brand voice.</div>
-        </div>
-        <div class="service-arrow-icon"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        </div>      </div>
       <div class="service">
         <div class="service-num">03 /</div>
         <div class="service-body">
           <div class="service-name">creative direction</div>
           <div class="service-desc">Visual strategy and consistent creative systems that shape a brand's voice across every touchpoint.</div>
-        </div>
-        <div class="service-arrow-icon"><img src="images/elements/arrow.svg" alt=""></div>
-      </div>
+        </div>      </div>
     </div>
     <div class="services-image"></div>
   </div>
 </section>
 
+<section class="screen-band"></section>
+
 <section class="contact" id="contact">
-  <div class="contact-lightning"><img src="images/elements/lightning.svg" alt=""></div>
   <div class="ghost ghost-contact"><img src="images/ghost-05.png" alt=""></div>
   <div class="contact-pre">// Get in touch / 2026</div>
   <h2 class="contact-massive">
