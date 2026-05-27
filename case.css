@@ -305,6 +305,9 @@ a,button{cursor:none}
 
 @media (max-width:900px){
   nav{padding:14px 20px}
+  .cursor{display:none}
+  html{cursor:auto}
+  a,button,.lang-opt{cursor:pointer}
   .case-header{padding:110px 20px 56px}
   .case-title{font-size:clamp(64px,22vw,120px)}
   .case-meta{grid-template-columns:1fr 1fr;gap:20px}
