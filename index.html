@@ -556,6 +556,14 @@
   .project.size-sm{grid-column:span 4}
   .project.size-xl{grid-column:span 12}
   .project.size-xl .project-img{aspect-ratio:21/9}
+  .work-feature{
+    grid-column:span 7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  }
+  .work-feature img{max-height:78%;width:auto;display:block}
 
   .about{
     padding:140px 32px;
@@ -890,6 +898,7 @@
     .filter{padding:8px 9px;font-size:9px;letter-spacing:0.08em;white-space:nowrap}
     .projects{grid-template-columns:1fr;gap:36px}
     .project.size-lg,.project.size-md,.project.size-sm{grid-column:span 12}
+    .work-feature{display:none}
     /* about: que el titulo no se encime */
     .about-massive{font-size:clamp(38px,11vw,60px);line-height:1.05;margin-bottom:40px}
     .about-grid{grid-template-columns:1fr;gap:32px}
@@ -1059,6 +1068,8 @@
         <div class="project-meta">2024 · AI Direction</div>
       </div>
     </a>
+
+    <div class="work-feature" aria-hidden="true"><img src="images/ghost-01.png" alt=""></div>
 
     <a href="#" class="project size-xl" data-cat="creative">
       <div class="project-img">
