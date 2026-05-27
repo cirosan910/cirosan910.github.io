@@ -4,6 +4,7 @@
 !/index.html
 !/case-*.html
 !/case.css
+!/i18n.js
 !/images/
 !/.gitignore
 # basura de macOS

@@ -99,6 +99,12 @@
     transition:all .2s ease;
   }
   nav .cta:hover{background:var(--bone);color:var(--purple)}
+  .nav-left{display:flex;align-items:center;gap:18px}
+  .lang-toggle{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em}
+  .lang-opt{cursor:none;opacity:0.45;transition:opacity .2s ease}
+  .lang-opt.active{opacity:1;text-decoration:underline;text-underline-offset:3px}
+  .lang-sep{opacity:0.35}
+  .marquee-track span::after{content:' ·';margin-left:2px}
 
   .hero{
     min-height:100vh;
@@ -920,23 +926,30 @@
 <div class="cursor" id="cursor"></div>
 
 <nav id="nav">
-  <a href="#" class="logo"><img src="images/logo-white.png" alt="cirosan."></a>
+  <div class="nav-left">
+    <a href="#" class="logo"><img src="images/logo-white.png" alt="cirosan."></a>
+    <div class="lang-toggle">
+      <span class="lang-opt active" data-lang="en">EN</span>
+      <span class="lang-sep">|</span>
+      <span class="lang-opt" data-lang="es">ES</span>
+    </div>
+  </div>
   <ul>
-    <li><a href="#work">01 · Work</a></li>
-    <li><a href="#about">02 · About</a></li>
-    <li><a href="#services">03 · Services</a></li>
+    <li><a href="#work" data-i18n="nav.work">01 · Work</a></li>
+    <li><a href="#about" data-i18n="nav.about">02 · About</a></li>
+    <li><a href="#services" data-i18n="nav.services">03 · Services</a></li>
   </ul>
-  <a href="#contact" class="cta">Let's talk →</a>
+  <a href="#contact" class="cta" data-i18n="nav.cta">Let's talk →</a>
 </nav>
 
 <section class="hero">
   <div class="hero-left">
     <div class="hero-slogan">
-      <h1>made to be<span class="felt">felt.</span></h1>
+      <h1 data-i18n="hero.slogan">made to be<span class="felt">felt.</span></h1>
     </div>
 
     <div class="hero-bottom">
-      <p class="hero-intro">
+      <p class="hero-intro" data-i18n="hero.intro">
         I build <strong>brands with character</strong> and <strong>AI-driven visuals</strong> from Gold Coast / AU, work that's felt, not just seen.
       </p>
     </div>
@@ -949,24 +962,24 @@
 
 <section class="divider-banner">
   <div class="divider-text">
-    <h3>design that <span class="accent">hits.</span></h3>
+    <h3 data-i18n="divider.h3">design that <span class="accent">hits.</span></h3>
   </div>
 </section>
 
 <div class="marquee">
   <div class="marquee-track">
-    <span>Brand Identity ·</span>
-    <span>AI Visuals ·</span>
-    <span>Creative Direction ·</span>
-    <span>Editorial Design ·</span>
-    <span>Packaging ·</span>
-    <span>Campaign ·</span>
-    <span>Brand Identity ·</span>
-    <span>AI Visuals ·</span>
-    <span>Creative Direction ·</span>
-    <span>Editorial Design ·</span>
-    <span>Packaging ·</span>
-    <span>Campaign ·</span>
+    <span data-i18n="mq.brand">Brand Identity</span>
+    <span data-i18n="mq.ai">AI Visuals</span>
+    <span data-i18n="mq.creative">Creative Direction</span>
+    <span data-i18n="mq.editorial">Editorial Design</span>
+    <span data-i18n="mq.packaging">Packaging</span>
+    <span data-i18n="mq.campaign">Campaign</span>
+    <span data-i18n="mq.brand">Brand Identity</span>
+    <span data-i18n="mq.ai">AI Visuals</span>
+    <span data-i18n="mq.creative">Creative Direction</span>
+    <span data-i18n="mq.editorial">Editorial Design</span>
+    <span data-i18n="mq.packaging">Packaging</span>
+    <span data-i18n="mq.campaign">Campaign</span>
   </div>
 </div>
 
@@ -974,16 +987,16 @@
   <div class="ghost ghost-work"><img src="images/ghost-03.png" alt=""></div>
   <div class="section-header">
     <div>
-      <div class="section-label">// Selected work / 2021–2026</div>
-      <h2 class="section-title">success <span class="accent">stories.</span></h2>
+      <div class="section-label" data-i18n="work.label">// Selected work / 2021–2026</div>
+      <h2 class="section-title" data-i18n="work.title">success <span class="accent">stories.</span></h2>
     </div>
   </div>
 
   <div class="filters">
-    <button class="filter active" data-filter="all">All works (07)</button>
-    <button class="filter" data-filter="branding">Branding</button>
-    <button class="filter" data-filter="ai">AI Visuals</button>
-    <button class="filter" data-filter="creative">Creative Dir.</button>
+    <button class="filter active" data-filter="all" data-i18n="filter.all">All works (07)</button>
+    <button class="filter" data-filter="branding" data-i18n="filter.branding">Branding</button>
+    <button class="filter" data-filter="ai" data-i18n="filter.ai">AI Visuals</button>
+    <button class="filter" data-filter="creative" data-i18n="filter.creative">Creative Dir.</button>
   </div>
 
   <div class="projects" id="projects">
@@ -993,11 +1006,11 @@
         <div class="project-placeholder">
           <div class="pname">gulero.</div>
         </div>
-        <span class="project-num">01 / Branding</span>
-        <span class="project-tag">Identity</span>      </div>
+        <span class="project-num" data-i18n="p1.num">01 / Branding</span>
+        <span class="project-tag" data-i18n="p1.tag">Identity</span>      </div>
       <div class="project-info">
-        <div class="project-name">Gulero · Alfajor Brand</div>
-        <div class="project-meta">2023 · Identity</div>
+        <div class="project-name" data-i18n="p1.name">Gulero · Alfajor Brand</div>
+        <div class="project-meta" data-i18n="p1.meta">2023 · Identity</div>
       </div>
     </a>
 
@@ -1007,11 +1020,11 @@
         <div class="project-placeholder">
           <div class="pname">ruda</div>
         </div>
-        <span class="project-num">02 / Branding</span>
-        <span class="project-tag">Identity</span>      </div>
+        <span class="project-num" data-i18n="p2.num">02 / Branding</span>
+        <span class="project-tag" data-i18n="p2.tag">Identity</span>      </div>
       <div class="project-info">
-        <div class="project-name">Ruda E-Bikes</div>
-        <div class="project-meta">2024 · Brand System</div>
+        <div class="project-name" data-i18n="p2.name">Ruda E-Bikes</div>
+        <div class="project-meta" data-i18n="p2.meta">2024 · Brand System</div>
       </div>
     </a>
 
@@ -1021,11 +1034,11 @@
         <div class="project-placeholder">
           <div class="pname">tāyati</div>
         </div>
-        <span class="project-num">03 / Branding</span>
-        <span class="project-tag">Identity</span>      </div>
+        <span class="project-num" data-i18n="p3.num">03 / Branding</span>
+        <span class="project-tag" data-i18n="p3.tag">Identity</span>      </div>
       <div class="project-info">
-        <div class="project-name">tāyati</div>
-        <div class="project-meta">2024 · Branding & Packaging</div>
+        <div class="project-name" data-i18n="p3.name">tāyati</div>
+        <div class="project-meta" data-i18n="p3.meta">2024 · Branding & Packaging</div>
       </div>
     </a>
 
@@ -1035,11 +1048,11 @@
         <div class="project-placeholder">
           <div class="pname">san<br/>alfonso</div>
         </div>
-        <span class="project-num">04 / AI</span>
-        <span class="project-tag ai">AI</span>      </div>
+        <span class="project-num" data-i18n="p4.num">04 / AI</span>
+        <span class="project-tag ai" data-i18n="p4.tag">AI</span>      </div>
       <div class="project-info">
-        <div class="project-name">San Alfonso</div>
-        <div class="project-meta">2025 · AI Campaign</div>
+        <div class="project-name" data-i18n="p4.name">San Alfonso</div>
+        <div class="project-meta" data-i18n="p4.meta">2025 · AI Campaign</div>
       </div>
     </a>
 
@@ -1049,11 +1062,11 @@
         <div class="project-placeholder">
           <div class="pname">roam v</div>
         </div>
-        <span class="project-num">05 / Creative Direction</span>
-        <span class="project-tag">Direction</span>      </div>
+        <span class="project-num" data-i18n="p5.num">05 / Creative Direction</span>
+        <span class="project-tag" data-i18n="p5.tag">Direction</span>      </div>
       <div class="project-info">
-        <div class="project-name">ROAM V</div>
-        <div class="project-meta">2026 · Creative Direction</div>
+        <div class="project-name" data-i18n="p5.name">ROAM V</div>
+        <div class="project-meta" data-i18n="p5.meta">2026 · Creative Direction</div>
       </div>
     </a>
 
@@ -1063,11 +1076,11 @@
         <div class="project-placeholder">
           <div class="pname">sellink</div>
         </div>
-        <span class="project-num">06 / AI</span>
-        <span class="project-tag ai">AI</span>      </div>
+        <span class="project-num" data-i18n="p6.num">06 / AI</span>
+        <span class="project-tag ai" data-i18n="p6.tag">AI</span>      </div>
       <div class="project-info">
-        <div class="project-name">Sellink Agency</div>
-        <div class="project-meta">2024 · AI Direction</div>
+        <div class="project-name" data-i18n="p6.name">Sellink Agency</div>
+        <div class="project-meta" data-i18n="p6.meta">2024 · AI Direction</div>
       </div>
     </a>
 
@@ -1079,11 +1092,11 @@
         <div class="project-placeholder">
           <div class="pname">los pumas</div>
         </div>
-        <span class="project-num">07 / Creative Direction</span>
-        <span class="project-tag">Direction</span>      </div>
+        <span class="project-num" data-i18n="p7.num">07 / Creative Direction</span>
+        <span class="project-tag" data-i18n="p7.tag">Direction</span>      </div>
       <div class="project-info">
-        <div class="project-name">Los Pumas · National Rugby Team</div>
-        <div class="project-meta">2024 · Sports / Creative Direction</div>
+        <div class="project-name" data-i18n="p7.name">Los Pumas · National Rugby Team</div>
+        <div class="project-meta" data-i18n="p7.meta">2024 · Sports / Creative Direction</div>
       </div>
     </a>
   </div>
@@ -1091,35 +1104,35 @@
 
 <section class="about" id="about">
   <div class="about-content">
-    <h2 class="about-massive">
+    <h2 class="about-massive" data-i18n="about.massive">
       designed to <span class="accent">connect</span>,<br/>
       <span class="stroke">built to last.</span>
     </h2>
 
     <div class="about-grid">
       <div class="about-text">
-        <p>I'm <strong>cirosan</strong>, a graphic designer & art director based on the Gold Coast.</p>
-        <p>I help brands find their voice through <strong>identity systems, AI-driven content, and creative direction</strong>, work that doesn't just decorate, but communicates.</p>
-        <p>For the last 5 years I've shipped work across food, retail, sports, marketing, and e-commerce, from packaging on shelves to campaigns running on social.</p>
-        <p>Design, for me, doesn't end with a piece. It starts with an idea and finds meaning when it connects.</p>
+        <p data-i18n="about.p1">I'm <strong>cirosan</strong>, a graphic designer & art director based on the Gold Coast.</p>
+        <p data-i18n="about.p2">I help brands find their voice through <strong>identity systems, AI-driven content, and creative direction</strong>, work that doesn't just decorate, but communicates.</p>
+        <p data-i18n="about.p3">For the last 5 years I've shipped work across food, retail, sports, marketing, and e-commerce, from packaging on shelves to campaigns running on social.</p>
+        <p data-i18n="about.p4">Design, for me, doesn't end with a piece. It starts with an idea and finds meaning when it connects.</p>
       </div>
       <div class="about-portrait"></div>
       <div class="about-stats">
         <div class="stat">
           <div class="stat-num">5+</div>
-          <div class="stat-label">Years designing</div>
+          <div class="stat-label" data-i18n="about.s1">Years designing</div>
         </div>
         <div class="stat">
           <div class="stat-num">40+</div>
-          <div class="stat-label">Projects shipped</div>
+          <div class="stat-label" data-i18n="about.s2">Projects shipped</div>
         </div>
         <div class="stat">
           <div class="stat-num">10+</div>
-          <div class="stat-label">Brands launched</div>
+          <div class="stat-label" data-i18n="about.s3">Brands launched</div>
         </div>
         <div class="stat">
           <div class="stat-num">∞</div>
-          <div class="stat-label">Coffee consumed</div>
+          <div class="stat-label" data-i18n="about.s4">Coffee consumed</div>
         </div>
       </div>
     </div>
@@ -1130,8 +1143,8 @@
   <div class="ghost ghost-services"><img src="images/ghost-04.png" alt=""></div>
   <div class="section-header">
     <div>
-      <div class="section-label">// What I do</div>
-      <h2 class="section-title">services</h2>
+      <div class="section-label" data-i18n="srv.label">// What I do</div>
+      <h2 class="section-title" data-i18n="srv.title">services</h2>
     </div>
   </div>
 
@@ -1140,20 +1153,20 @@
       <div class="service">
         <div class="service-num">01 /</div>
         <div class="service-body">
-          <div class="service-name">brand & identity</div>
-          <div class="service-desc">Logos, visual systems, packaging, and guidelines built to give a brand character and clarity from day one.</div>
+          <div class="service-name" data-i18n="srv.n1">brand & identity</div>
+          <div class="service-desc" data-i18n="srv.d1">Logos, visual systems, packaging, and guidelines built to give a brand character and clarity from day one.</div>
         </div>      </div>
       <div class="service">
         <div class="service-num">02 /</div>
         <div class="service-body">
-          <div class="service-name">ai visual content</div>
-          <div class="service-desc">AI as a creative tool, fast, aesthetic, and unique visuals that stay authentic to the brand voice.</div>
+          <div class="service-name" data-i18n="srv.n2">ai visual content</div>
+          <div class="service-desc" data-i18n="srv.d2">AI as a creative tool, fast, aesthetic, and unique visuals that stay authentic to the brand voice.</div>
         </div>      </div>
       <div class="service">
         <div class="service-num">03 /</div>
         <div class="service-body">
-          <div class="service-name">creative direction</div>
-          <div class="service-desc">Visual strategy and consistent creative systems that shape a brand's voice across every touchpoint.</div>
+          <div class="service-name" data-i18n="srv.n3">creative direction</div>
+          <div class="service-desc" data-i18n="srv.d3">Visual strategy and consistent creative systems that shape a brand's voice across every touchpoint.</div>
         </div>      </div>
     </div>
     <div class="services-image"></div>
@@ -1164,9 +1177,9 @@
 
 <section class="contact" id="contact">
   <div class="ghost ghost-contact"><img src="images/ghost-05.png" alt=""></div>
-  <div class="contact-pre">// Get in touch / 2026</div>
+  <div class="contact-pre" data-i18n="contact.pre">// Get in touch / 2026</div>
   <h2 class="contact-massive">
-    <a href="mailto:ciroccoposada@gmail.com">let's make<br/>something <span class="accent">good.</span></a>
+    <a href="mailto:ciroccoposada@gmail.com" data-i18n="contact.massive">let's make<br/>something <span class="accent">good.</span></a>
   </h2>
   <div class="contact-links">
     <a href="mailto:ciroccoposada@gmail.com">Email</a>
@@ -1176,7 +1189,7 @@
   </div>
   <footer>
     <div>© 2026 · cirosan.</div>
-    <div>Built in Gold Coast, AU</div>
+    <div data-i18n="footer.built">Built in Gold Coast, AU</div>
   </footer>
 </section>
 
@@ -1216,5 +1229,6 @@
     });
   });
 </script>
+<script src="i18n.js"></script>
 </body>
 </html>
