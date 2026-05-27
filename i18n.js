@@ -42,8 +42,11 @@ window.I18N = {
     "srv.n3": "creative direction",
     "srv.d3": "Visual strategy and consistent creative systems that shape a brand's voice across every touchpoint.",
     "contact.pre": "// Get in touch / 2026",
-    "contact.massive": "let's make<br/>something <span class=\"accent\">good.</span>",
+    "contact.massive": "let's <span class=\"accent\">talk.</span>",
     "band.cta": "let's make<br/>something good",
+    "form.name": "Name", "form.email": "Email", "form.message": "Message",
+    "form.submit": "Send message", "form.sending": "Sending...",
+    "form.success": "Sent. I'll be in touch soon.", "form.error": "Something went wrong. Try again.",
     "footer.built": "Built in Gold Coast, AU",
 
     "case.back": "← All work",
@@ -163,8 +166,11 @@ window.I18N = {
     "srv.n3": "dirección creativa",
     "srv.d3": "Estrategia visual y sistemas creativos consistentes que moldean la voz de una marca en cada punto de contacto.",
     "contact.pre": "// Contacto / 2026",
-    "contact.massive": "hagamos algo <span class=\"accent\">bueno.</span>",
+    "contact.massive": "<span class=\"accent\">hablemos.</span>",
     "band.cta": "hagamos<br/>algo bueno",
+    "form.name": "Nombre", "form.email": "Email", "form.message": "Mensaje",
+    "form.submit": "Enviar mensaje", "form.sending": "Enviando...",
+    "form.success": "Enviado. Te escribo pronto.", "form.error": "Algo salió mal. Probá de nuevo.",
     "footer.built": "Hecho en Gold Coast, AU",
 
     "case.back": "← Volver",
@@ -252,6 +258,10 @@ window.I18N = {
     document.querySelectorAll('[data-i18n]').forEach(function(el){
       var k=el.getAttribute('data-i18n');
       if(dict[k]!=null) el.innerHTML=dict[k];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+      var k=el.getAttribute('data-i18n-ph');
+      if(dict[k]!=null) el.setAttribute('placeholder',dict[k]);
     });
     document.documentElement.setAttribute('lang',lang);
     document.querySelectorAll('.lang-opt').forEach(function(o){
