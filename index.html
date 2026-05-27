@@ -866,22 +866,33 @@
     .ghost-hero,.ghost-work{display:none}
     nav{padding:14px 20px}
     nav ul{display:none}
-    .hero{grid-template-columns:1fr;padding-left:20px;padding-right:20px;gap:32px;padding-top:90px}
-    .hero-image{order:-1;aspect-ratio:4/5}
-    .hero-bottom{flex-direction:column;align-items:flex-start;gap:24px}
-    .divider-banner{height:40vh;min-height:280px}
+    /* HERO: el slogan manda, la imagen va despues y acotada */
+    .hero{grid-template-columns:1fr;padding:92px 20px 44px;gap:24px;min-height:auto}
+    .hero-slogan{margin:8px 0}
+    .hero-slogan h1{font-size:clamp(54px,16vw,88px)}
+    .hero-image{order:2;aspect-ratio:4/5;max-height:56vh}
+    .hero-bottom{flex-direction:column;align-items:flex-start;gap:18px}
+    .scroll-cue{display:none}
+    .divider-banner{height:36vh;min-height:240px}
     .divider-text{padding:24px}
-    .work,.about,.services,.contact{padding-left:20px;padding-right:20px}
-    .about-grid{grid-template-columns:1fr;gap:40px}
-    .about-portrait{max-width:400px}
-    .about-eye{width:80px;top:40px;right:24px}
-    .services-grid{grid-template-columns:1fr;gap:40px}
-    .services-image{display:none}
+    /* secciones: menos relleno */
+    .work,.about,.services,.contact{padding:72px 20px}
+    .section-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:36px}
+    .section-header>div:last-child{text-align:left!important;max-width:100%!important}
+    .section-title{font-size:clamp(48px,15vw,82px)}
+    .filters{margin-bottom:32px}
+    .projects{gap:40px}
     .project.size-lg,.project.size-md,.project.size-sm{grid-column:span 12}
-    .service{grid-template-columns:40px 1fr;gap:16px}
-    .service-arrow-icon{display:none}
+    /* about: que el titulo no se encime */
+    .about-massive{font-size:clamp(40px,12vw,66px);line-height:1;margin-bottom:44px}
+    .about-grid{grid-template-columns:1fr;gap:32px}
+    .about-portrait{max-width:100%}
+    .services-grid{grid-template-columns:1fr;gap:28px}
+    .services-image{display:none}
+    .service{grid-template-columns:40px 1fr;gap:16px;padding:28px 0}
+    .screen-band{height:42vh;min-height:300px}
+    .contact-massive{font-size:clamp(52px,15vw,92px)}
     .contact-links{flex-direction:column;gap:16px}
-    .star-decor{display:none}
   }
 </style>
 </head>
@@ -912,7 +923,7 @@
 
     <div class="hero-bottom">
       <p class="hero-intro">
-        I build <strong>brands with character</strong> and <strong>AI-driven visuals</strong> from Gold Coast / AU — work that's felt, not just seen.
+        I build <strong>brands with character</strong> and <strong>AI-driven visuals</strong> from Gold Coast / AU, work that's felt, not just seen.
       </p>
       <div class="scroll-cue">
         <span>Scroll<br/>to see work</span>
@@ -979,7 +990,7 @@
         <span class="project-num">01 / Branding</span>
         <span class="project-tag">Identity</span>      </div>
       <div class="project-info">
-        <div class="project-name">Gulero — Alfajor Brand</div>
+        <div class="project-name">Gulero · Alfajor Brand</div>
         <div class="project-meta">2023 · Identity</div>
       </div>
     </a>
@@ -1063,7 +1074,7 @@
         <span class="project-num">07 / Creative Direction</span>
         <span class="project-tag">Direction</span>      </div>
       <div class="project-info">
-        <div class="project-name">Los Pumas — National Rugby Team</div>
+        <div class="project-name">Los Pumas · National Rugby Team</div>
         <div class="project-meta">2024 · Sports / Creative Direction</div>
       </div>
     </a>
@@ -1079,9 +1090,9 @@
 
     <div class="about-grid">
       <div class="about-text">
-        <p>I'm <strong>cirosan</strong> — a graphic designer & art director based on the Gold Coast.</p>
-        <p>I help brands find their voice through <strong>identity systems, AI-driven content, and creative direction</strong> — work that doesn't just decorate, but communicates.</p>
-        <p>For the last 5 years I've shipped work across food, retail, sports, marketing, and e-commerce — from packaging on shelves to campaigns running on social.</p>
+        <p>I'm <strong>cirosan</strong>, a graphic designer & art director based on the Gold Coast.</p>
+        <p>I help brands find their voice through <strong>identity systems, AI-driven content, and creative direction</strong>, work that doesn't just decorate, but communicates.</p>
+        <p>For the last 5 years I've shipped work across food, retail, sports, marketing, and e-commerce, from packaging on shelves to campaigns running on social.</p>
         <p>Design, for me, doesn't end with a piece. It starts with an idea and finds meaning when it connects.</p>
       </div>
       <div class="about-portrait"></div>
@@ -1128,7 +1139,7 @@
         <div class="service-num">02 /</div>
         <div class="service-body">
           <div class="service-name">ai visual content</div>
-          <div class="service-desc">AI as a creative tool — fast, aesthetic, and unique visuals that stay authentic to the brand voice.</div>
+          <div class="service-desc">AI as a creative tool, fast, aesthetic, and unique visuals that stay authentic to the brand voice.</div>
         </div>      </div>
       <div class="service">
         <div class="service-num">03 /</div>
@@ -1156,7 +1167,7 @@
     <a href="https://wa.me/61406060265">WhatsApp</a>
   </div>
   <footer>
-    <div>© 2026 — cirosan.</div>
+    <div>© 2026 · cirosan.</div>
     <div>Built in Gold Coast, AU</div>
   </footer>
 </section>
