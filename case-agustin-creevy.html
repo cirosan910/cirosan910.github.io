@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agustín Creevy Case Study / cirosan.</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo"><img src="images/logo-white.png" alt="cirosan."></a>
+    <div class="lang-toggle">
+      <span class="lang-opt active" data-lang="en">EN</span>
+      <span class="lang-sep">|</span>
+      <span class="lang-opt" data-lang="es">ES</span>
+    </div>
+  </div>
+  <a href="index.html" class="back" data-i18n="case.back">← All work</a>
+</nav>
+
+<section class="case-header">
+  <div class="case-breadcrumb" data-i18n="ac.bc">/ Work / <span>Branding</span> / Agustín Creevy</div>
+  <h1 class="case-title">Agustín Creevy</h1>
+  <div class="case-meta">
+    <div class="case-meta-item"><div class="label" data-i18n="case.lblClient">// Client</div><div class="value">Agustín Creevy</div></div>
+    <div class="case-meta-item"><div class="label" data-i18n="case.lblYear">// Year</div><div class="value">2026</div></div>
+    <div class="case-meta-item"><div class="label" data-i18n="case.lblRole">// Role</div><div class="value" data-i18n="ac.role">Brand Identity & Visual Language</div></div>
+    <div class="case-meta-item"><div class="label" data-i18n="case.lblCat">// Category</div><div class="value" data-i18n="ac.cat">Sports / Personal Brand</div></div>
+  </div>
+</section>
+
+<div class="case-hero-img" data-img="agustin-creevy/hero"><span class="ph-label">// CREEVY_01</span></div>
+
+<section class="case-section">
+  <div class="case-row">
+    <div class="case-row-label" data-i18n="case.l1">// 01 / Context</div>
+    <div>
+      <h2 class="case-h2" data-i18n="ac.h1">from the pitch <em>to the feed.</em></h2>
+      <div class="case-body">
+        <p data-i18n="ac.b1">A national rugby figure stepping into a new role: <strong>creator, streamer, public voice</strong>.</p>
+        <p data-i18n="ac.b2">The brand had to hold that weight without imposing on the content he makes every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section dark">
+  <div class="case-row">
+    <div class="case-row-label" data-i18n="case.l2">// 02 / Approach</div>
+    <div>
+      <h2 class="case-h2" data-i18n="ac.h2">one word: <em>toro.</em></h2>
+      <div class="case-body">
+        <p data-i18n="ac.b3">A nickname turned into a shared language. The identity sits quietly behind daily content, then <strong>takes the stage</strong> on clinics, events and product.</p>
+        <p data-i18n="ac.b4">Bull-horn monogram, condensed type, electric cyan against deep teal and black.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gallery">
+  <div class="gallery-img span-6" data-img="agustin-creevy/01"><span class="ph-label">// IMG_01</span></div>
+  <div class="gallery-img span-6" data-img="agustin-creevy/02"><span class="ph-label">// IMG_02</span></div>
+  <div class="gallery-img span-12" data-img="agustin-creevy/03"><span class="ph-label">// IMG_03</span></div>
+  <div class="gallery-img span-4" data-img="agustin-creevy/04"><span class="ph-label">// IMG_04</span></div>
+  <div class="gallery-img span-8" data-img="agustin-creevy/05"><span class="ph-label">// IMG_05</span></div>
+</div>
+
+<section class="case-section">
+  <div class="case-row">
+    <div class="case-row-label" data-i18n="case.l3">// 03 / Outcome</div>
+    <div>
+      <h2 class="case-h2" data-i18n="ac.h3">one identity, <em>every surface.</em></h2>
+      <div class="case-body">
+        <p data-i18n="ac.b5">A flexible system across <strong>merch, sponsor activations, packaging, social and product</strong>.</p>
+        <p data-i18n="ac.b6">An identity that travels with him from the locker room to the camera.</p>
+      </div>
+      <div class="results-grid">
+        <div class="result-card"><div class="result-num">1</div><div class="result-label" data-i18n="ac.r1">Logotype + bull-horn monogram</div></div>
+        <div class="result-card"><div class="result-num">4</div><div class="result-label" data-i18n="ac.r2">Brand colors, one system</div></div>
+        <div class="result-card"><div class="result-num">10+</div><div class="result-label" data-i18n="ac.r3">Applications and mockups</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next-project">
+  <div class="next-pre" data-i18n="case.next">// Next project</div>
+  <h2 class="next-title"><a href="case-san-alfonso.html">san alfonso <span class="next-arrow">→</span></a></h2>
+</section>
+
+<footer class="main">
+  <div>© 2026 · cirosan.</div>
+  <div data-i18n="footer.built">Built in Gold Coast, AU</div>
+</footer>
+
+<script>
+  const cursor=document.getElementById('cursor');
+  let mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  function loop(){
+    cx+=(mx-cx)*0.2;cy+=(my-cy)*0.2;
+    cursor.style.left=cx+'px';cursor.style.top=cy+'px';
+    requestAnimationFrame(loop);
+  }
+  loop();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
+  });
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>
