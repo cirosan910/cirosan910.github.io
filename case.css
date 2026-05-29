@@ -222,6 +222,8 @@ nav .back:hover{background:var(--bone);color:var(--purple)}
   font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
   background:var(--ink);color:var(--bone);padding:5px 9px;z-index:3;
 }
+.has-img .ph-label{display:none}
+.case-hero-img.has-img,.gallery-img.has-img{background-color:#000}
 
 .results-grid{
   display:grid;

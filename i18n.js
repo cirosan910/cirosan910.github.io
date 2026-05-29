@@ -273,6 +273,25 @@ window.I18N = {
       var k=el.getAttribute('data-i18n-ph');
       if(dict[k]!=null) el.setAttribute('placeholder',dict[k]);
     });
+    document.querySelectorAll('[data-img]').forEach(function(el){
+      var slot=el.getAttribute('data-img');
+      el.style.backgroundImage="url('images/"+slot+"-"+lang+".jpg')";
+      el.style.backgroundSize="cover";
+      el.style.backgroundPosition="center";
+      el.style.backgroundRepeat="no-repeat";
+      el.classList.add('has-img');
+    });
+    document.querySelectorAll('[data-img-bg]').forEach(function(el){
+      var slot=el.getAttribute('data-img-bg');
+      var bg=el.querySelector('.project-img-bg');
+      if(bg){
+        bg.style.backgroundImage="url('images/"+slot+"-"+lang+".jpg')";
+        bg.style.backgroundSize="cover";
+        bg.style.backgroundPosition="center";
+        bg.style.opacity="1";
+      }
+      el.classList.add('has-img');
+    });
     document.documentElement.setAttribute('lang',lang);
     document.querySelectorAll('.lang-opt').forEach(function(o){
       o.classList.toggle('active', o.getAttribute('data-lang')===lang);
