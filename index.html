@@ -1424,10 +1424,9 @@
     stats.forEach(s=>statIO.observe(s));
   }
 
-  /* Section titles reveal on scroll (clip-path mask) */
+  /* Section titles reveal on scroll (clip-path mask) — robust: skip .pre if already on screen, safety timer */
   if(!reduceMotion){
     const titles=document.querySelectorAll('.section-title, .about-massive, .contact-massive, .divider-text h3, .band-text');
-    titles.forEach(t=>t.classList.add('reveal-title','pre'));
     const titleIO=new IntersectionObserver((entries,obs)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
@@ -1435,8 +1434,24 @@
           obs.unobserve(e.target);
         }
       });
-    },{threshold:0.18,rootMargin:'0px 0px -8% 0px'});
-    titles.forEach(t=>titleIO.observe(t));
+    },{threshold:0.01,rootMargin:'0px 0px -3% 0px'});
+    titles.forEach(t=>{
+      const r=t.getBoundingClientRect();
+      const visible=r.top<window.innerHeight && r.bottom>0;
+      t.classList.add('reveal-title');
+      if(visible){
+        t.classList.add('in-view');
+      } else {
+        t.classList.add('pre');
+        titleIO.observe(t);
+        setTimeout(()=>{
+          if(!t.classList.contains('in-view')){
+            t.classList.add('in-view');
+            titleIO.unobserve(t);
+          }
+        },2500);
+      }
+    });
   }
 
   /* Project cards: load cover image, cycle 01->02->03 on hover, subtle tilt */
