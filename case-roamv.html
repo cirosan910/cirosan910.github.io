@@ -10,9 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="case.css">
 </head>
-<body>
+<body class="case-roamv">
 
-<div class="cursor" id="cursor"></div>
 
 <nav>
   <div class="nav-left">
@@ -101,21 +100,6 @@
   <div data-i18n="footer.built">Made for the world · 2026</div>
 </footer>
 
-<script>
-  const cursor=document.getElementById('cursor');
-  let mx=0,my=0,cx=0,cy=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-  function loop(){
-    cx+=(mx-cx)*0.2;cy+=(my-cy)*0.2;
-    cursor.style.left=cx+'px';cursor.style.top=cy+'px';
-    requestAnimationFrame(loop);
-  }
-  loop();
-  document.querySelectorAll('a,button').forEach(el=>{
-    el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
-    el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
-  });
-</script>
 <script src="i18n.js"></script>
 </body>
 </html>
