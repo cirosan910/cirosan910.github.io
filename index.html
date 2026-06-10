@@ -1047,7 +1047,7 @@
     <li><a href="#about" data-i18n="nav.about">02 · About</a></li>
     <li><a href="#services" data-i18n="nav.services">03 · Services</a></li>
   </ul>
-  <a href="#contact" class="cta" data-i18n="nav.cta">Let's talk →</a>
+  <a href="#contact" class="cta" data-magnetic data-i18n="nav.cta">Let's talk →</a>
 </nav>
 
 <section class="hero">
@@ -1323,7 +1323,7 @@
       <span class="form-label" data-i18n="form.mlabel">Message</span>
       <textarea name="message" rows="4" required placeholder="What are you building?" data-i18n-ph="form.message" aria-label="Message"></textarea>
     </div>
-    <button class="full" type="submit" data-i18n="form.submit">Send message</button>
+    <button class="full" type="submit" data-magnetic data-i18n="form.submit">Send message</button>
     <p class="form-status full" id="form-status" role="status"></p>
   </form>
   <div class="contact-links">
@@ -1342,6 +1342,25 @@
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const coarsePointer=matchMedia('(pointer: coarse)').matches;
   const finePointer=!reduceMotion && !coarsePointer;
+
+  /* Magnetic pull on CTAs */
+  if(finePointer){
+    document.querySelectorAll('[data-magnetic]').forEach(el=>{
+      let f;
+      el.style.willChange='transform';
+      el.addEventListener('pointermove',e=>{
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left-r.width/2)*0.25;
+        const y=(e.clientY-r.top-r.height/2)*0.25;
+        cancelAnimationFrame(f);
+        f=requestAnimationFrame(()=>{el.style.transform=`translate(${x}px,${y}px)`});
+      });
+      el.addEventListener('pointerleave',()=>{
+        cancelAnimationFrame(f);
+        el.style.transform='';
+      });
+    });
+  }
 
   /* Project cards: load cover image, cycle 01->02->03 on hover, subtle tilt */
   document.querySelectorAll('.project[data-img-bg]').forEach(card=>{
