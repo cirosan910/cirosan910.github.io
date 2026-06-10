@@ -27,7 +27,7 @@
     --tracking-label:0.2em;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;cursor:none}
+  html{scroll-behavior:smooth}
   body{
     font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;
     background:var(--purple);
@@ -45,23 +45,6 @@
     pointer-events:none;
     z-index:1000;
     mix-blend-mode:multiply;
-  }
-
-  .cursor{
-    position:fixed;
-    width:14px;height:14px;
-    background:var(--bone);
-    border-radius:50%;
-    pointer-events:none;
-    z-index:9999;
-    mix-blend-mode:exclusion;
-    transition:width .2s ease,height .2s ease,background .2s ease;
-    transform:translate(-50%,-50%);
-  }
-  .cursor.hover{
-    width:64px;height:64px;
-    background:var(--ink);
-    mix-blend-mode:normal;
   }
 
   nav{
@@ -105,7 +88,7 @@
   nav .cta:hover{background:var(--bone);color:var(--purple)}
   .nav-left{display:flex;align-items:center;gap:18px}
   .lang-toggle{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em}
-  .lang-opt{cursor:none;opacity:0.45;transition:opacity .2s ease}
+  .lang-opt{opacity:0.45;transition:opacity .2s ease}
   .lang-opt.active{opacity:1;text-decoration:underline;text-underline-offset:3px}
   .lang-sep{opacity:0.35}
   .marquee-track span::after{content:' ·';margin-left:2px}
@@ -434,7 +417,7 @@
     border:1px solid var(--bone);
     background:transparent;
     color:var(--bone);
-    cursor:none;
+    
     transition:all .2s ease;
     font-family:inherit;
     font-size:12px;
@@ -454,7 +437,7 @@
   }
   .project{
     position:relative;
-    cursor:none;
+    
     transition:transform .5s cubic-bezier(.4,0,.2,1);
     text-decoration:none;
     color:inherit;
@@ -736,7 +719,7 @@
     grid-template-columns:60px 1fr 60px;
     gap:24px;
     align-items:center;
-    cursor:none;
+    
     transition:all .4s ease;
     position:relative;
   }
@@ -922,7 +905,6 @@
     opacity:0.8;
   }
   .form-chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{cursor:none}
   .chip input{position:absolute;opacity:0;width:0;height:0}
   .chip span{
     display:inline-block;
@@ -948,7 +930,7 @@
     text-transform:uppercase;
     font-weight:500;
     padding:16px 34px;
-    cursor:none;
+    
     transition:all .2s ease;
   }
   .contact-form button:hover{background:var(--bone);color:var(--purple)}
@@ -992,7 +974,6 @@
     font-family:'JetBrains Mono',monospace;
   }
 
-  a,button,.project,.service,.filter{cursor:none}
 
   .ghost{
     position:absolute;
@@ -1033,9 +1014,6 @@
     .project.size-lg,.project.size-md,.project.size-sm,.project.size-xl{grid-column:1 / -1}
     .project-info{flex-direction:column;align-items:flex-start;gap:4px}
     .project-meta{white-space:normal}
-    .cursor{display:none}
-    html{cursor:auto}
-    a,button,.project,.service,.filter,.lang-opt{cursor:pointer}
     .work-feature{display:none}
     /* about: que el titulo no se encime */
     .about-massive{font-size:clamp(38px,11vw,60px);line-height:1.05;margin-bottom:40px}
@@ -1054,7 +1032,6 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
 
 <nav id="nav">
   <div class="nav-left">
@@ -1362,20 +1339,6 @@
 </section>
 
 <script>
-  const cursor=document.getElementById('cursor');
-  let mx=0,my=0,cx=0,cy=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-  function loop(){
-    cx+=(mx-cx)*0.2;cy+=(my-cy)*0.2;
-    cursor.style.left=cx+'px';cursor.style.top=cy+'px';
-    requestAnimationFrame(loop);
-  }
-  loop();
-  document.querySelectorAll('a,button,.project,.service').forEach(el=>{
-    el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
-    el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
-  });
-
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>{
     if(window.scrollY>50){nav.classList.add('scrolled')}
