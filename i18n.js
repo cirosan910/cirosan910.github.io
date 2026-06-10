@@ -285,7 +285,7 @@ window.I18N = {
       var proj=el.getAttribute('data-img-bg');
       var bg=el.querySelector('.project-img-bg');
       if(bg){
-        bg.style.backgroundImage="url('images/"+proj+"/01-"+lang+".jpg')";
+        bg.style.backgroundImage="url('images/"+proj+"/cover-"+lang+".jpg')";
         bg.style.backgroundSize="cover";
         bg.style.backgroundPosition="center";
       }

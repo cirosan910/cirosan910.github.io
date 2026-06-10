@@ -1478,20 +1478,20 @@
     const getLang=()=>document.documentElement.getAttribute('lang')||'en';
     const url=name=>`images/${proj}/${name}-${getLang()}.jpg`;
     const setImg=name=>{bg.style.backgroundImage=`url('${url(name)}')`};
-    setImg('01');
+    setImg('cover');
     card.classList.add('has-img');
-    slots.slice(1).forEach(n=>{const i=new Image();i.src=url(n)});
+    slots.forEach(n=>{const i=new Image();i.src=url(n)});
     if(!finePointer) return;
-    let idx=0, timer=null, frame;
+    let idx=-1, timer=null, frame;
     card.addEventListener('pointerenter',()=>{
-      idx=0;
+      idx=-1;
       timer=setInterval(()=>{idx=(idx+1)%slots.length;setImg(slots[idx])}, 1000);
     });
     card.addEventListener('pointerleave',()=>{
       clearInterval(timer);
       timer=null;
-      idx=0;
-      setImg('01');
+      idx=-1;
+      setImg('cover');
       cancelAnimationFrame(frame);
       inner.style.transform='';
     });
