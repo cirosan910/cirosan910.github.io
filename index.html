@@ -1391,6 +1391,31 @@
     });
   }
 
+  /* About stats count-up on viewport */
+  if(!reduceMotion){
+    const stats=document.querySelectorAll('.stat-num');
+    const statIO=new IntersectionObserver((entries,obs)=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting) return;
+        obs.unobserve(e.target);
+        const el=e.target;
+        const m=el.textContent.trim().match(/^(\d+)(\+?)$/);
+        if(!m) return;
+        const target=parseInt(m[1],10);
+        const suffix=m[2]||'';
+        const dur=1400;
+        const t0=performance.now();
+        (function tick(now){
+          const t=Math.min(1,(now-t0)/dur);
+          const eased=1-Math.pow(1-t,4);
+          el.textContent=Math.round(target*eased)+suffix;
+          if(t<1) requestAnimationFrame(tick);
+        })(t0);
+      });
+    },{threshold:0.5});
+    stats.forEach(s=>statIO.observe(s));
+  }
+
   /* Section titles reveal on scroll (clip-path mask) */
   if(!reduceMotion){
     const titles=document.querySelectorAll('.section-title, .about-massive, .contact-massive, .divider-text h3, .band-text');
