@@ -975,19 +975,59 @@
     .divider-text{padding:24px}
     .divider-text h3{font-size:clamp(34px,10vw,72px);max-width:100%;white-space:nowrap;line-height:1}
     .about,.services,.contact{padding:64px 20px}
-    .index{padding:84px 0 90px}
-    .index-head{padding:0 20px 20px}
-    .idx-row{flex-wrap:wrap;align-items:center;gap:12px 14px;padding:20px}
-    .idx-num{min-width:auto}
-    .idx-name{flex:1 1 100%;font-size:clamp(38px,11vw,64px);-webkit-text-stroke-width:1.5px;order:-1}
+    .index{padding:0}
+    .index-bg{display:none}
+    .index-head{padding:84px 20px 20px}
+    /* each project = a full-bleed page: image behind, name on top */
+    .idx-row{
+      flex-direction:column;
+      justify-content:flex-end;
+      align-items:flex-start;
+      gap:8px;
+      min-height:clamp(380px,56vh,560px);
+      padding:28px 20px;
+      border:none;
+      border-top:1px solid rgba(255,255,255,0.22);
+      overflow:hidden;
+    }
+    .idx-row:last-child{border-bottom:none}
     .idx-thumb{
       display:block;
-      width:64px;height:64px;
+      position:absolute;inset:0;
+      width:auto;height:auto;
       background-size:cover;
       background-position:center;
-      filter:grayscale(1) contrast(1.2);
+      filter:grayscale(1) contrast(1.05) brightness(0.92);
+      z-index:0;
     }
-    .idx-meta{white-space:normal}
+    /* riso-purple wash: flat purple multiplies the grayscale photo into brand purple,
+       gradient darkens the bottom for name legibility */
+    .idx-row::after{
+      content:'';
+      position:absolute;inset:0;
+      background-color:var(--purple);
+      background-image:linear-gradient(to top,rgba(10,10,11,0.92),rgba(10,10,11,0.15) 52%,rgba(10,10,11,0) 80%);
+      mix-blend-mode:multiply;
+      z-index:1;
+      pointer-events:none;
+    }
+    .idx-num{
+      position:absolute;top:24px;left:20px;
+      z-index:2;min-width:auto;opacity:0.85;
+    }
+    .idx-name{
+      position:relative;z-index:2;
+      flex:none;
+      font-size:clamp(48px,14vw,86px);
+      line-height:0.92;
+      white-space:normal;
+      color:var(--bone);
+      -webkit-text-stroke:0;
+    }
+    .idx-meta{
+      position:relative;z-index:2;
+      opacity:0.9;white-space:normal;
+    }
     .about-massive{font-size:clamp(38px,11vw,60px);line-height:1.05;margin-bottom:40px}
     .about-grid{grid-template-columns:1fr;gap:40px}
     .about-text{font-size:15px;line-height:1.55}
@@ -1317,9 +1357,9 @@
     const url=(proj,name)=>`images/${proj}/${name}-${getLang()}.jpg`;
     rows.forEach(row=>{
       const proj=row.dataset.proj;
-      // mobile thumbnail
+      // mobile full-bleed page image (content shot, not the logo cover)
       const thumb=row.querySelector('.idx-thumb');
-      if(thumb) thumb.style.backgroundImage=`url('${url(proj,'cover')}')`;
+      if(thumb) thumb.style.backgroundImage=`url('${url(proj,'01')}')`;
       if(!finePointer) return;
       slots.forEach(n=>{const i=new Image();i.src=url(proj,n)});
       let idx=-1,timer=null;
