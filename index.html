@@ -1474,7 +1474,7 @@
     const bg=card.querySelector('.project-img-bg');
     const proj=card.dataset.imgBg;
     if(!proj||!bg||!inner) return;
-    const slots=['01','02','03'];
+    const slots=['01','02','03','04','05'];
     const getLang=()=>document.documentElement.getAttribute('lang')||'en';
     const url=name=>`images/${proj}/${name}-${getLang()}.jpg`;
     const setImg=name=>{bg.style.backgroundImage=`url('${url(name)}')`};
@@ -1485,7 +1485,7 @@
     let idx=-1, timer=null, frame;
     card.addEventListener('pointerenter',()=>{
       idx=-1;
-      timer=setInterval(()=>{idx=(idx+1)%slots.length;setImg(slots[idx])}, 1000);
+      timer=setInterval(()=>{idx=(idx+1)%slots.length;setImg(slots[idx])}, 200);
     });
     card.addEventListener('pointerleave',()=>{
       clearInterval(timer);
