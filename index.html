@@ -183,6 +183,17 @@
     100%{transform:translateY(0);opacity:1}
   }
 
+  @media (prefers-reduced-motion: no-preference){
+    .reveal-title.pre{
+      clip-path:inset(0 0 100% 0);
+      transform:translateY(28px);
+    }
+    .reveal-title.in-view{
+      clip-path:inset(0);
+      transform:translateY(0);
+      transition:clip-path 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1);
+    }
+  }
 
   .hero-bottom{
     display:flex;
@@ -1378,6 +1389,21 @@
         el.style.transform='';
       });
     });
+  }
+
+  /* Section titles reveal on scroll (clip-path mask) */
+  if(!reduceMotion){
+    const titles=document.querySelectorAll('.section-title, .about-massive, .contact-massive, .divider-text h3, .band-text');
+    titles.forEach(t=>t.classList.add('reveal-title','pre'));
+    const titleIO=new IntersectionObserver((entries,obs)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in-view');
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.18,rootMargin:'0px 0px -8% 0px'});
+    titles.forEach(t=>titleIO.observe(t));
   }
 
   /* Project cards: load cover image, cycle 01->02->03 on hover, subtle tilt */
