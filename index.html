@@ -380,19 +380,6 @@
     padding:0;
   }
 
-  /* ============ MARQUEE — INK ============ */
-
-  /* ============ WORK — INK + DARK GRUNGE ============ */
-  .work{
-    padding:140px 32px 160px;
-    background:var(--ink);
-    color:var(--bone);
-    position:relative;
-    overflow:hidden;
-  }
-  .work>*{position:relative;z-index:2}
-  .work .tear{z-index:6}
-
   .section-header{
     display:flex;
     justify-content:space-between;
@@ -425,336 +412,95 @@
     padding:0 12px;
     display:inline-block;
   }
-  .filters{
-    display:flex;
-    gap:8px;
-    margin-bottom:64px;
-    flex-wrap:wrap;
-  }
-  .filter{
-    padding:10px 20px;
-    border:1px solid var(--bone);
-    background:transparent;
-    color:var(--bone);
-    transition:all .2s ease;
-    font-family:inherit;
-    font-size:12px;
-    letter-spacing:var(--tracking-mono);
-    text-transform:uppercase;
-    font-weight:500;
-    cursor:pointer;
-  }
-  .filter:hover,.filter.active{
+  /* ============ WORK INDEX — type as interface ============ */
+  .index{
+    position:relative;
     background:var(--purple);
-    color:var(--bone);
-    border-color:var(--purple);
-  }
-  .projects{
-    display:grid;
-    grid-template-columns:repeat(12,1fr);
-    gap:44px 32px;
-  }
-  /* cards = taped photos */
-  .project{
-    position:relative;
-    transition:transform .3s cubic-bezier(.16,1,.3,1);
-    text-decoration:none;
-    color:inherit;
-    display:block;
-    transform:rotate(var(--rot,0deg));
-    transform-origin:50% -12px;
-  }
-  .project:nth-child(4n+1){--rot:-1.4deg}
-  .project:nth-child(4n+2){--rot:1.1deg}
-  .project:nth-child(4n+3){--rot:-0.8deg}
-  .project:nth-child(4n){--rot:1.6deg}
-  .project:hover{transform:rotate(0deg) translateY(-10px)}
-  .project-img{
-    width:100%;
-    aspect-ratio:4/5;
-    background:var(--graphite);
-    position:relative;
+    padding:120px 0 140px;
     overflow:hidden;
-    margin-bottom:18px;
-    border:10px solid #F2F0EB;
-    box-shadow:0 10px 34px rgba(0,0,0,0.5);
   }
-  /* tape on every card */
-  .project::before{
-    content:'';
-    position:absolute;
-    top:-20px;
-    left:50%;
-    width:clamp(88px,8vw,130px);
-    height:44px;
-    background-image:url('images/zine/tape-1.png');
-    background-size:contain;
-    background-repeat:no-repeat;
-    background-position:center;
-    transform:translateX(-50%) rotate(-3deg);
-    filter:grayscale(1) brightness(1.18);
-    opacity:0.9;
-    z-index:5;
-    pointer-events:none;
-  }
-  .project:nth-child(even)::before{transform:translateX(-50%) rotate(4deg)}
-  .project::before{transition:transform .35s cubic-bezier(.16,1,.3,1)}
-  .project:hover::before{transform:translateX(-50%) rotate(0deg) scaleY(1.06)}
-  .project-img-bg{
-    position:absolute;
-    inset:0;
+  .index-bg{
+    position:absolute;inset:0;
     background-size:cover;
     background-position:center;
-    background-repeat:no-repeat;
-    filter:none;
-    opacity:1;
-    transition:filter .45s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
-    z-index:0;
-  }
-  /* grunge overlay above image, below labels */
-  .project-img::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.85'/%3E%3C/svg%3E");
-    background-size:240px 240px;
-    mix-blend-mode:multiply;
     opacity:0;
+    transition:opacity .35s ease;
+    filter:grayscale(1) contrast(1.3) brightness(1.05);
+    mix-blend-mode:multiply;
+    z-index:1;
     pointer-events:none;
-    transition:opacity .45s ease;
+  }
+  .index-bg.on{opacity:1}
+  .index-head{
+    padding:0 32px 28px;
+    position:relative;
     z-index:2;
   }
-  .project:hover .project-img-bg{
-    filter:grayscale(1) contrast(1.22) brightness(0.92);
-    transform:scale(1.03);
-  }
-  .project:hover .project-img::after{opacity:0.55}
-  .project.has-img .project-placeholder{display:none}
-  .project-placeholder{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:24px;
-    z-index:1;
-    font-family:'JetBrains Mono',monospace;
-    background:
-      linear-gradient(135deg,rgba(255,255,255,0.04) 25%,transparent 25%,transparent 75%,rgba(255,255,255,0.04) 75%),
-      linear-gradient(135deg,rgba(255,255,255,0.04) 25%,transparent 25%,transparent 75%,rgba(255,255,255,0.04) 75%);
-    background-size:20px 20px;
-    background-position:0 0,10px 10px;
-  }
-  .project-placeholder .pname{
-    font-family:'Inter Tight',sans-serif;
-    font-size:clamp(28px,3.5vw,48px);
-    font-weight:900;
-    letter-spacing:var(--tracking-tight);
-    text-transform:lowercase;
-    margin-bottom:12px;
-    color:var(--bone);
-  }
-  .project-num{
-    position:absolute;
-    top:12px;left:12px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    color:var(--bone);
-    z-index:3;
-    letter-spacing:0.1em;
-    background:var(--purple);
-    padding:4px 8px;
-  }
-  .project-tag{
-    position:absolute;
-    top:12px;right:12px;
-    background:var(--bone);
-    color:var(--ink);
-    font-size:10px;
-    padding:4px 10px;
-    text-transform:uppercase;
-    letter-spacing:0.15em;
-    font-weight:700;
-    z-index:3;
-  }
-  .project-tag.ai{background:var(--ink);color:var(--bone)}
-  .project-info{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-  }
-  .project-name{
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:var(--tracking-tight);
-  }
-  .project-meta{
-    font-size:11px;
-    opacity:0.6;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    font-family:'JetBrains Mono',monospace;
-  }
-  .project.size-lg{grid-column:span 7}
-  .project.size-md{grid-column:span 5}
-  .project.size-sm{grid-column:span 4}
-  .project.size-xl{grid-column:span 12}
-  .project.size-xl .project-img{aspect-ratio:21/9}
-  .work-feature{
-    grid-column:span 5;
-    aspect-ratio:4/5;
-    align-self:start;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    pointer-events:none;
-  }
-  .work-feature img{max-height:94%;width:auto;display:block;opacity:0.3;filter:invert(1)}
-
-
-  /* ============ ZINE SPREADS ============ */
-  .spread{
-    position:relative;
-    overflow:hidden;
-    background:var(--purple);
-    padding:90px 32px;
-    display:grid;
-    align-items:center;
-  }
-  .spread.deep{background:var(--purple-deep)}
-  .spread.inkbg{background:var(--ink);color:var(--bone)}
-  .spread .project{--rot:0deg;transform:none}
-  .spread .project::before{display:none}
-  .spread .project:hover{transform:translateY(-6px)}
-
-  .spread-kicker{
+  .index-label{
     font-family:'JetBrains Mono',monospace;
     font-size:11px;
     letter-spacing:var(--tracking-label);
     text-transform:uppercase;
     opacity:0.75;
-    margin-bottom:18px;
-    display:flex;
-    align-items:center;
-    gap:14px;
   }
-  .spread-kicker::before{
-    content:'';
-    width:34px;height:1px;
-    background:currentColor;
-    opacity:0.7;
-  }
-
-  /* full-bleed featured spread */
-  .spread-feature{
-    min-height:96vh;
-    grid-template-columns:1.15fr 0.85fr;
-    gap:clamp(32px,5vw,80px);
-    padding:90px 0 90px 0;
-  }
-  .spread-feature .feature-img{
-    position:relative;
-    height:min(82vh,900px);
-    overflow:hidden;
-  }
-  .spread-feature .project-img{
-    width:100%;
-    height:100%;
-    aspect-ratio:auto;
-    border:none;
-    box-shadow:none;
-    margin:0;
-    background:var(--graphite);
-  }
-  .spread-feature .feature-text{
-    padding-right:clamp(24px,4vw,80px);
+  .index-list{
+    display:block;
     position:relative;
     z-index:2;
   }
-  .spread-feature.flip{grid-template-columns:0.85fr 1.15fr}
-  .spread-feature.flip .feature-img{order:2}
-  .spread-feature.flip .feature-text{order:1;padding-right:0;padding-left:clamp(24px,4vw,80px)}
-  .spread-title{
-    font-size:clamp(56px,9vw,150px);
+  .idx-row{
+    display:flex;
+    align-items:baseline;
+    gap:clamp(16px,2.5vw,40px);
+    padding:clamp(16px,2.6vw,30px) 32px;
+    border-top:1px solid rgba(255,255,255,0.28);
+    text-decoration:none;
+    color:var(--bone);
+    position:relative;
+    transition:background .25s ease;
+  }
+  .idx-row:last-child{border-bottom:1px solid rgba(255,255,255,0.28)}
+  .idx-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    opacity:0.6;
+    min-width:30px;
+    transition:opacity .25s ease;
+  }
+  .idx-name{
+    font-size:clamp(40px,6.4vw,118px);
+    white-space:nowrap;
+    overflow:visible;
     font-weight:900;
-    line-height:0.85;
+    line-height:0.95;
     letter-spacing:var(--tracking-display);
     text-transform:lowercase;
-    margin-bottom:24px;
-    text-wrap:balance;
+    color:transparent;
+    -webkit-text-stroke:2px rgba(255,255,255,0.85);
+    transition:color .3s cubic-bezier(.16,1,.3,1),-webkit-text-stroke-color .3s ease,transform .3s cubic-bezier(.16,1,.3,1);
+    flex:1;
+    min-width:0;
   }
-  .spread-meta{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    opacity:0.7;
-    margin-bottom:36px;
-  }
-  .spread-cta{
-    display:inline-block;
-    border:1px solid var(--bone);
-    color:var(--bone);
-    padding:14px 26px;
-    font-size:12px;
-    letter-spacing:var(--tracking-mono);
-    text-transform:uppercase;
-    font-weight:500;
-    transition:all .25s cubic-bezier(.16,1,.3,1);
-  }
-  .spread:hover .spread-cta,.spread-cta:hover{background:var(--ink);border-color:var(--ink)}
-  .spread-index{
-    position:absolute;
-    top:28px;right:32px;
+  .idx-meta{
     font-family:'JetBrains Mono',monospace;
     font-size:11px;
-    letter-spacing:var(--tracking-label);
+    letter-spacing:0.1em;
     text-transform:uppercase;
-    opacity:0.55;
-    z-index:3;
+    opacity:0.6;
+    white-space:nowrap;
+    transition:opacity .25s ease;
   }
-
-  /* double-poster spread */
-  .spread-duo{
-    min-height:92vh;
-    grid-template-columns:3fr 2fr;
-    gap:clamp(28px,4vw,64px);
-    align-items:start;
-    padding:110px 48px;
+  .idx-thumb{display:none}
+  @media (hover:hover) and (pointer:fine){
+    .idx-row:hover{background:rgba(10,10,11,0.25)}
+    .idx-row:hover .idx-name{
+      color:var(--bone);
+      -webkit-text-stroke-color:transparent;
+      transform:translateX(14px);
+    }
+    .idx-row:hover .idx-num,.idx-row:hover .idx-meta{opacity:1}
   }
-  .spread-duo.flip{grid-template-columns:2fr 3fr}
-  .spread-duo .project{transform:rotate(var(--rot,0deg))}
-  .spread-duo .project::before{display:block}
-  .spread-duo .project:nth-child(1){--rot:-1deg}
-  .spread-duo .project:nth-child(2){--rot:1.2deg;margin-top:clamp(40px,8vh,120px)}
-  .spread-duo .project:hover{transform:rotate(0deg) translateY(-8px)}
-  .spread-duo .project-img{aspect-ratio:4/5}
-
-  /* pumas wide spread */
-  .spread-wide{
-    min-height:96vh;
-    grid-template-columns:1fr;
-    padding:90px 0 130px;
-  }
-  .spread-wide .project-img{
-    width:100%;
-    height:min(74vh,820px);
-    aspect-ratio:auto;
-    border:none;
-    box-shadow:none;
-    margin:0;
-  }
-  .spread-wide .wide-caption{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    padding:28px 48px 0;
-    gap:24px;
-    flex-wrap:wrap;
-  }
-  .spread-wide .spread-title{margin-bottom:0;font-size:clamp(48px,7.5vw,120px)}
 
   /* ============ ABOUT — PAPER ============ */
   .about{
@@ -1229,33 +975,19 @@
     .divider-text{padding:24px}
     .divider-text h3{font-size:clamp(34px,10vw,72px);max-width:100%;white-space:nowrap;line-height:1}
     .about,.services,.contact{padding:64px 20px}
-    .spread{padding:64px 20px;min-height:auto}
-    .spread-feature{grid-template-columns:1fr;gap:28px;padding:80px 0 56px}
-    .spread-feature .feature-img{height:62vh;width:100%}
-    .spread-feature .feature-text,{padding:0 20px}
-    .spread-feature .feature-text{padding:0 20px}
-    .spread-feature.flip .feature-img{order:0}
-    .spread-feature.flip .feature-text{order:1;padding:0 20px}
-    .spread-duo,.spread-duo.flip{grid-template-columns:1fr;gap:44px;padding:64px 20px}
-    .spread-duo .project:nth-child(2){margin-top:0}
-    .spread-wide{padding:64px 0 80px}
-    .spread-wide .project-img{height:48vh}
-    .spread-wide .wide-caption{padding:20px 20px 0}
-    .spread-index{right:20px;top:18px}
-    .section-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:36px}
-    .section-header>div:last-child{text-align:left!important;max-width:100%!important}
-    .section-title{font-size:clamp(48px,15vw,82px)}
-    .filters{margin-bottom:32px;flex-wrap:nowrap;gap:6px;overflow-x:auto}
-    .filter{padding:8px 9px;font-size:9px;letter-spacing:0.08em;white-space:nowrap}
-    .projects{grid-template-columns:1fr;gap:44px}
-    .project.size-lg,.project.size-md,.project.size-sm,.project.size-xl{grid-column:1 / -1}
-    .project{--rot:0deg}
-    .project:nth-child(odd){--rot:-0.9deg}
-    .project:nth-child(even){--rot:0.9deg}
-    .project-img{border-width:7px}
-    .project-info{flex-direction:column;align-items:flex-start;gap:4px}
-    .project-meta{white-space:normal}
-    .work-feature{display:none}
+    .index{padding:84px 0 90px}
+    .index-head{padding:0 20px 20px}
+    .idx-row{flex-wrap:wrap;align-items:center;gap:12px 14px;padding:20px}
+    .idx-num{min-width:auto}
+    .idx-name{flex:1 1 100%;font-size:clamp(38px,11vw,64px);-webkit-text-stroke-width:1.5px;order:-1}
+    .idx-thumb{
+      display:block;
+      width:64px;height:64px;
+      background-size:cover;
+      background-position:center;
+      filter:grayscale(1) contrast(1.2);
+    }
+    .idx-meta{white-space:normal}
     .about-massive{font-size:clamp(38px,11vw,60px);line-height:1.05;margin-bottom:40px}
     .about-grid{grid-template-columns:1fr;gap:40px}
     .about-text{font-size:15px;line-height:1.55}
@@ -1317,43 +1049,49 @@
   <div class="ghost ghost-hero"><img src="images/ghost-02.png" alt=""></div>
 </section>
 
-<section class="spread spread-feature paper-tex" id="work">
-  <div class="spread-index">cirosan zine · 01</div>
-  <a href="case-gulero.html" class="feature-img project" data-cat="branding" data-img-bg="gulero" aria-label="Gulero case study">
-    <div class="project-img"><div class="project-img-bg"></div></div>
-  </a>
-  <div class="feature-text">
-    <div class="spread-kicker" data-i18n="work.feat">Featured project</div>
-    <h2 class="spread-title">gulero.</h2>
-    <div class="spread-meta"><span data-i18n="p1.meta">2023 · Identity</span></div>
-    <a class="spread-cta" href="case-gulero.html" data-i18n="work.view">View case →</a>
+<section class="index paper-tex" id="work">
+  <div class="index-bg" aria-hidden="true"></div>
+  <div class="index-head">
+    <span class="index-label" data-i18n="work.label">// Selected work / 2021–2026</span>
   </div>
-</section>
-
-<section class="spread spread-duo deep paper-tex">
-  <div class="spread-index">cirosan zine · 02</div>
-  <a href="case-ruda.html" class="project" data-cat="branding" data-img-bg="ruda">
-    <div class="project-img">
-      <div class="project-img-bg"></div>
-      <span class="project-num" data-i18n="p2.num">02 / Branding</span>
-      <span class="project-tag" data-i18n="p2.tag">Identity</span>
-    </div>
-    <div class="project-info">
-      <div class="project-name" data-i18n="p2.name">Ruda E-Bikes</div>
-      <div class="project-meta" data-i18n="p2.meta">2024 · Brand System</div>
-    </div>
-  </a>
-  <a href="case-agustin-creevy.html" class="project" data-cat="branding" data-img-bg="agustin-creevy">
-    <div class="project-img">
-      <div class="project-img-bg"></div>
-      <span class="project-num" data-i18n="p3.num">03 / Branding</span>
-      <span class="project-tag" data-i18n="p3.tag">Identity</span>
-    </div>
-    <div class="project-info">
-      <div class="project-name" data-i18n="p3.name">Agustín Creevy</div>
-      <div class="project-meta" data-i18n="p3.meta">2026 · Brand Identity</div>
-    </div>
-  </a>
+  <nav class="index-list" aria-label="Projects">
+    <a class="idx-row" href="case-gulero.html" data-proj="gulero">
+      <span class="idx-num">01</span>
+      <span class="idx-name">gulero.</span>
+      <span class="idx-thumb" aria-hidden="true"></span>
+      <span class="idx-meta" data-i18n="p1.meta">2023 · Identity</span>
+    </a>
+    <a class="idx-row" href="case-ruda.html" data-proj="ruda">
+      <span class="idx-num">02</span>
+      <span class="idx-name">ruda</span>
+      <span class="idx-thumb" aria-hidden="true"></span>
+      <span class="idx-meta" data-i18n="p2.meta">2024 · Brand System</span>
+    </a>
+    <a class="idx-row" href="case-agustin-creevy.html" data-proj="agustin-creevy">
+      <span class="idx-num">03</span>
+      <span class="idx-name">agustín creevy</span>
+      <span class="idx-thumb" aria-hidden="true"></span>
+      <span class="idx-meta" data-i18n="p3.meta">2026 · Brand Identity</span>
+    </a>
+    <a class="idx-row" href="case-san-alfonso.html" data-proj="san-alfonso">
+      <span class="idx-num">04</span>
+      <span class="idx-name">san alfonso</span>
+      <span class="idx-thumb" aria-hidden="true"></span>
+      <span class="idx-meta" data-i18n="p4.meta">2025 · AI Campaign</span>
+    </a>
+    <a class="idx-row" href="case-roamv.html" data-proj="roamv">
+      <span class="idx-num">05</span>
+      <span class="idx-name">roam v</span>
+      <span class="idx-thumb" aria-hidden="true"></span>
+      <span class="idx-meta" data-i18n="p5.meta">2026 · Creative Direction</span>
+    </a>
+    <a class="idx-row" href="case-lospumas.html" data-proj="lospumas">
+      <span class="idx-num">06</span>
+      <span class="idx-name">los pumas</span>
+      <span class="idx-thumb" aria-hidden="true"></span>
+      <span class="idx-meta" data-i18n="p7.meta">2024 · Sports / Creative Direction</span>
+    </a>
+  </nav>
 </section>
 
 <section class="divider-banner">
@@ -1361,44 +1099,6 @@
   <div class="divider-text">
     <h3 data-i18n="divider.h3">design that <span class="accent">hits.</span></h3>
   </div>
-</section>
-
-<section class="spread spread-duo flip paper-tex">
-  <div class="spread-index">cirosan zine · 03</div>
-  <a href="case-san-alfonso.html" class="project" data-cat="ai" data-img-bg="san-alfonso">
-    <div class="project-img">
-      <div class="project-img-bg"></div>
-      <span class="project-num" data-i18n="p4.num">04 / AI</span>
-      <span class="project-tag ai" data-i18n="p4.tag">AI</span>
-    </div>
-    <div class="project-info">
-      <div class="project-name" data-i18n="p4.name">San Alfonso</div>
-      <div class="project-meta" data-i18n="p4.meta">2025 · AI Campaign</div>
-    </div>
-  </a>
-  <a href="case-roamv.html" class="project" data-cat="creative" data-img-bg="roamv">
-    <div class="project-img">
-      <div class="project-img-bg"></div>
-      <span class="project-num" data-i18n="p5.num">05 / Creative Direction</span>
-      <span class="project-tag" data-i18n="p5.tag">Direction</span>
-    </div>
-    <div class="project-info">
-      <div class="project-name" data-i18n="p5.name">Roam V</div>
-      <div class="project-meta" data-i18n="p5.meta">2026 · Creative Direction</div>
-    </div>
-  </a>
-</section>
-
-<section class="spread spread-wide inkbg ink-tex">
-  <div class="spread-index">cirosan zine · 04</div>
-  <a href="case-lospumas.html" class="project" data-cat="creative" data-img-bg="lospumas" aria-label="Los Pumas case study">
-    <div class="project-img"><div class="project-img-bg"></div></div>
-  </a>
-  <div class="wide-caption">
-    <h2 class="spread-title" data-i18n="p7.name">Los Pumas · National Rugby Team</h2>
-    <a class="spread-cta" href="case-lospumas.html" data-i18n="work.view">View case →</a>
-  </div>
-  <img class="tear tear-bottom" src="images/zine/tear-2.png" alt="" aria-hidden="true">
 </section>
 
 <section class="about paper-tex" id="about">
@@ -1607,43 +1307,37 @@
     });
   }
 
-  /* Project cards: load cover image, fast 5-frame loop on hover, subtle tilt */
-  document.querySelectorAll('.project[data-img-bg]').forEach(card=>{
-    const inner=card.querySelector('.project-img');
-    const bg=card.querySelector('.project-img-bg');
-    const proj=card.dataset.imgBg;
-    if(!proj||!bg||!inner) return;
+  /* Work index: hover a name -> full-bleed flipbook behind the list */
+  (function(){
+    const bg=document.querySelector('.index-bg');
+    const rows=document.querySelectorAll('.idx-row[data-proj]');
+    if(!bg||!rows.length) return;
     const slots=['01','02','03','04','05'];
     const getLang=()=>document.documentElement.getAttribute('lang')||'en';
-    const url=name=>`images/${proj}/${name}-${getLang()}.jpg`;
-    const setImg=name=>{bg.style.backgroundImage=`url('${url(name)}')`};
-    setImg('cover');
-    card.classList.add('has-img');
-    if(!finePointer) return;
-    slots.forEach(n=>{const i=new Image();i.src=url(n)});
-    let idx=-1, timer=null, frame;
-    card.addEventListener('pointerenter',()=>{
-      idx=-1;
-      timer=setInterval(()=>{idx=(idx+1)%slots.length;setImg(slots[idx])}, 200);
-    });
-    card.addEventListener('pointerleave',()=>{
-      clearInterval(timer);
-      timer=null;
-      idx=-1;
-      setImg('cover');
-      cancelAnimationFrame(frame);
-      inner.style.transform='';
-    });
-    card.addEventListener('pointermove',e=>{
-      const r=card.getBoundingClientRect();
-      const px=(e.clientX-r.left)/r.width-0.5;
-      const py=(e.clientY-r.top)/r.height-0.5;
-      cancelAnimationFrame(frame);
-      frame=requestAnimationFrame(()=>{
-        inner.style.transform=`perspective(900px) rotateY(${px*3}deg) rotateX(${-py*3}deg)`;
+    const url=(proj,name)=>`images/${proj}/${name}-${getLang()}.jpg`;
+    rows.forEach(row=>{
+      const proj=row.dataset.proj;
+      // mobile thumbnail
+      const thumb=row.querySelector('.idx-thumb');
+      if(thumb) thumb.style.backgroundImage=`url('${url(proj,'cover')}')`;
+      if(!finePointer) return;
+      slots.forEach(n=>{const i=new Image();i.src=url(proj,n)});
+      let idx=-1,timer=null;
+      row.addEventListener('pointerenter',()=>{
+        idx=0;
+        bg.style.backgroundImage=`url('${url(proj,slots[0])}')`;
+        bg.classList.add('on');
+        timer=setInterval(()=>{
+          idx=(idx+1)%slots.length;
+          bg.style.backgroundImage=`url('${url(proj,slots[idx])}')`;
+        },200);
+      });
+      row.addEventListener('pointerleave',()=>{
+        clearInterval(timer);timer=null;
+        bg.classList.remove('on');
       });
     });
-  });
+  })();
 
   /* Nav scrolled state via IntersectionObserver (no scroll listener) */
   const nav=document.getElementById('nav');
@@ -1656,21 +1350,6 @@
       nav.classList.toggle('scrolled', !entry.isIntersecting);
     }, {threshold:0}).observe(sentinel);
   }
-
-  const filters=document.querySelectorAll('.filter');
-  const projects=document.querySelectorAll('.project');
-  filters.forEach(f=>{
-    f.addEventListener('click',e=>{
-      e.preventDefault();
-      filters.forEach(x=>x.classList.remove('active'));
-      f.classList.add('active');
-      const cat=f.dataset.filter;
-      projects.forEach(p=>{
-        if(cat==='all'||p.dataset.cat===cat){p.style.display='block'}
-        else{p.style.display='none'}
-      });
-    });
-  });
 
   /* Contact form via Web3Forms */
   (function(){
