@@ -289,6 +289,7 @@ window.I18N = {
         bg.style.backgroundSize="cover";
         bg.style.backgroundPosition="center";
       }
+      el.classList.add('has-img');
     });
     document.documentElement.setAttribute('lang',lang);
     document.querySelectorAll('.lang-opt').forEach(function(o){

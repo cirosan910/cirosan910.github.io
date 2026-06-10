@@ -488,9 +488,9 @@
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
-    filter:grayscale(1) contrast(1.25) brightness(0.92);
-    opacity:0;
-    transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
+    filter:none;
+    opacity:1;
+    transition:filter .45s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
     z-index:0;
   }
   /* grunge overlay sits above the image, below labels (project-num, project-tag are z-index:3) */
@@ -507,13 +507,12 @@
     z-index:2;
   }
   .project:hover .project-img-bg{
-    opacity:1;
+    filter:grayscale(1) contrast(1.22) brightness(0.92);
     transform:scale(1.03);
   }
   .project:hover .project-img::after{opacity:0.55}
-  .project:hover .project-placeholder{opacity:0}
+  .project.has-img .project-placeholder{display:none}
   .project-placeholder{
-    transition:opacity .35s ease;
     position:absolute;
     inset:0;
     display:flex;
@@ -1441,7 +1440,7 @@
 
   /* Section titles reveal on scroll (clip-path mask) — robust: skip .pre if already on screen, safety timer */
   if(!reduceMotion){
-    const titles=document.querySelectorAll('.section-title, .about-massive, .contact-massive, .divider-text h3, .band-text');
+    const titles=document.querySelectorAll('.section-title, .about-massive, .contact-massive, .divider-text h3');
     const titleIO=new IntersectionObserver((entries,obs)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
@@ -1480,6 +1479,7 @@
     const url=name=>`images/${proj}/${name}-${getLang()}.jpg`;
     const setImg=name=>{bg.style.backgroundImage=`url('${url(name)}')`};
     setImg('01');
+    card.classList.add('has-img');
     slots.slice(1).forEach(n=>{const i=new Image();i.src=url(n)});
     if(!finePointer) return;
     let idx=0, timer=null, frame;
