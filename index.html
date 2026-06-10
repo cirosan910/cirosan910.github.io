@@ -1005,26 +1005,41 @@
       width:auto;height:auto;
       background-size:cover;
       background-position:center;
-      filter:grayscale(1) contrast(1.08);
+      background-repeat:no-repeat;
       z-index:0;
     }
     /* bottom darken for name legibility (both patterns) */
     .idx-row::after{
       content:'';
       position:absolute;inset:0;
-      background-image:linear-gradient(to top,rgba(10,10,11,0.78),rgba(10,10,11,0) 56%);
+      background-image:linear-gradient(to top,rgba(10,10,11,0.7),rgba(10,10,11,0) 56%);
       z-index:1;
       pointer-events:none;
     }
-    /* PATTERN A — morado+negro: purple field, cover's black drops out (screen), logo floats on purple */
+    /* MONOCHROME TINT via 'color' blend — applies purple hue at the photo's own luminance,
+       so ANY cover (light or dark) becomes purple. 'multiply' layer deepens + sets dominance. */
+    /* PATTERN A — morado+negro: purple-dominant */
     .idx-row:nth-child(odd){background:var(--purple)}
-    .idx-row:nth-child(odd) .idx-thumb{mix-blend-mode:screen;filter:grayscale(1) contrast(1.1) brightness(1.1)}
-    .idx-row:nth-child(odd)::after{background-image:linear-gradient(to top,rgba(45,26,64,0.7),rgba(45,26,64,0) 50%)}
+    .idx-row:nth-child(odd) .idx-thumb{
+      background-image:
+        linear-gradient(rgba(90,55,127,0.45),rgba(90,55,127,0.45)),
+        linear-gradient(var(--purple),var(--purple)),
+        var(--cover);
+      background-blend-mode:multiply,color,normal;
+      filter:contrast(1.05) brightness(1.25);
+    }
     .idx-row:nth-child(odd) .idx-num,
     .idx-row:nth-child(odd) .idx-meta{color:var(--bone)}
-    /* PATTERN B — negro+morado: black field, full B&W cover, purple accents */
+    /* PATTERN B — negro+morado: black-dominant with purple cast */
     .idx-row:nth-child(even){background:var(--ink)}
-    .idx-row:nth-child(even) .idx-thumb{filter:grayscale(1) contrast(1.12) brightness(0.95)}
+    .idx-row:nth-child(even) .idx-thumb{
+      background-image:
+        linear-gradient(rgba(10,10,11,0.58),rgba(10,10,11,0.58)),
+        linear-gradient(var(--purple),var(--purple)),
+        var(--cover);
+      background-blend-mode:multiply,color,normal;
+      filter:contrast(1.05) brightness(0.95);
+    }
     .idx-row:nth-child(even) .idx-num,
     .idx-row:nth-child(even) .idx-meta{color:var(--purple-up);opacity:1}
     .idx-num{
@@ -1373,9 +1388,9 @@
     const url=(proj,name)=>`images/${proj}/${name}-${getLang()}.jpg`;
     rows.forEach(row=>{
       const proj=row.dataset.proj;
-      // mobile full-bleed page: the branded cover (with logo)
+      // mobile full-bleed page: pass the cover via --cover so CSS controls the duotone per row
       const thumb=row.querySelector('.idx-thumb');
-      if(thumb) thumb.style.backgroundImage=`url('${url(proj,'cover')}')`;
+      if(thumb) thumb.style.setProperty('--cover',`url('${url(proj,'cover')}')`);
       if(!finePointer) return;
       slots.forEach(n=>{const i=new Image();i.src=url(proj,n)});
       let idx=-1,timer=null;
