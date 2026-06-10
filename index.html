@@ -1101,14 +1101,14 @@
   </div>
 
   <div class="filters">
-    <button class="filter active" data-filter="all" data-i18n="filter.all">All works (07)</button>
+    <button class="filter active" data-filter="all" data-i18n="filter.all">All works (06)</button>
     <button class="filter" data-filter="branding" data-i18n="filter.branding">Branding</button>
     <button class="filter" data-filter="ai" data-i18n="filter.ai">AI Visuals</button>
     <button class="filter" data-filter="creative" data-i18n="filter.creative">Creative Dir.</button>
   </div>
 
   <div class="projects" id="projects">
-    <a href="case-gulero.html" class="project size-lg" data-cat="branding" data-img-bg="gulero/cover">
+    <a href="case-gulero.html" class="project has-img size-lg" data-cat="branding" data-img-bg="gulero">
       <div class="project-img">
         <div class="project-img-bg"></div>
         <div class="project-placeholder">
@@ -1122,7 +1122,7 @@
       </div>
     </a>
 
-    <a href="case-ruda.html" class="project size-md" data-cat="branding" data-img-bg="ruda/cover">
+    <a href="case-ruda.html" class="project has-img size-md" data-cat="branding" data-img-bg="ruda">
       <div class="project-img">
         <div class="project-img-bg"></div>
         <div class="project-placeholder">
@@ -1136,7 +1136,7 @@
       </div>
     </a>
 
-    <a href="case-agustin-creevy.html" class="project size-sm" data-cat="branding" data-img-bg="agustin-creevy/cover">
+    <a href="case-agustin-creevy.html" class="project has-img size-sm" data-cat="branding" data-img-bg="agustin-creevy">
       <div class="project-img">
         <div class="project-img-bg"></div>
         <div class="project-placeholder">
@@ -1150,7 +1150,7 @@
       </div>
     </a>
 
-    <a href="case-san-alfonso.html" class="project size-sm" data-cat="ai" data-img-bg="san-alfonso/cover">
+    <a href="case-san-alfonso.html" class="project has-img size-sm" data-cat="ai" data-img-bg="san-alfonso">
       <div class="project-img">
         <div class="project-img-bg"></div>
         <div class="project-placeholder">
@@ -1164,7 +1164,7 @@
       </div>
     </a>
 
-    <a href="case-roamv.html" class="project size-sm" data-cat="creative" data-img-bg="roamv/cover">
+    <a href="case-roamv.html" class="project has-img size-sm" data-cat="creative" data-img-bg="roamv">
       <div class="project-img">
         <div class="project-img-bg"></div>
         <div class="project-placeholder">
@@ -1197,7 +1197,7 @@
 
     <div class="work-feature" aria-hidden="true"><img src="images/ghost-01.png" alt=""></div>
 
-    <a href="case-lospumas.html" class="project size-xl" data-cat="creative" data-img-bg="lospumas/cover">
+    <a href="case-lospumas.html" class="project has-img size-xl" data-cat="creative" data-img-bg="lospumas">
       <div class="project-img">
         <div class="project-img-bg"></div>
         <div class="project-placeholder">
@@ -1339,6 +1339,47 @@
 </section>
 
 <script>
+  const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarsePointer=matchMedia('(pointer: coarse)').matches;
+  const finePointer=!reduceMotion && !coarsePointer;
+
+  /* Project cards: load cover image, cycle 01->02->03 on hover, subtle tilt */
+  document.querySelectorAll('.project[data-img-bg]').forEach(card=>{
+    const inner=card.querySelector('.project-img');
+    const bg=card.querySelector('.project-img-bg');
+    const proj=card.dataset.imgBg;
+    if(!proj||!bg||!inner) return;
+    const slots=['01','02','03'];
+    const getLang=()=>document.documentElement.getAttribute('lang')||'en';
+    const url=name=>`images/${proj}/${name}-${getLang()}.jpg`;
+    const setImg=name=>{bg.style.backgroundImage=`url('${url(name)}')`};
+    setImg('01');
+    slots.slice(1).forEach(n=>{const i=new Image();i.src=url(n)});
+    if(!finePointer) return;
+    let idx=0, timer=null, frame;
+    card.addEventListener('pointerenter',()=>{
+      idx=0;
+      timer=setInterval(()=>{idx=(idx+1)%slots.length;setImg(slots[idx])}, 900);
+    });
+    card.addEventListener('pointerleave',()=>{
+      clearInterval(timer);
+      timer=null;
+      idx=0;
+      setImg('01');
+      cancelAnimationFrame(frame);
+      inner.style.transform='';
+    });
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width-0.5;
+      const py=(e.clientY-r.top)/r.height-0.5;
+      cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        inner.style.transform=`perspective(900px) rotateY(${px*3}deg) rotateX(${-py*3}deg)`;
+      });
+    });
+  });
+
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>{
     if(window.scrollY>50){nav.classList.add('scrolled')}
