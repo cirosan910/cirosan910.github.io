@@ -282,10 +282,10 @@ window.I18N = {
       el.classList.add('has-img');
     });
     document.querySelectorAll('[data-img-bg]').forEach(function(el){
-      var slot=el.getAttribute('data-img-bg');
+      var proj=el.getAttribute('data-img-bg');
       var bg=el.querySelector('.project-img-bg');
       if(bg){
-        bg.style.backgroundImage="url('images/"+slot+"-"+lang+".jpg')";
+        bg.style.backgroundImage="url('images/"+proj+"/01-"+lang+".jpg')";
         bg.style.backgroundSize="cover";
         bg.style.backgroundPosition="center";
         bg.style.opacity="1";
