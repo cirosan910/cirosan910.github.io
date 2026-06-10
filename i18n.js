@@ -288,9 +288,7 @@ window.I18N = {
         bg.style.backgroundImage="url('images/"+proj+"/01-"+lang+".jpg')";
         bg.style.backgroundSize="cover";
         bg.style.backgroundPosition="center";
-        bg.style.opacity="1";
       }
-      el.classList.add('has-img');
     });
     document.documentElement.setAttribute('lang',lang);
     document.querySelectorAll('.lang-opt').forEach(function(o){
