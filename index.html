@@ -10,6 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 
+  @font-face{
+    font-family:'Drowner';
+    src:url('fonts/drowner.otf') format('opentype');
+    font-display:swap;
+  }
+
   /* ============ XEROX ZINE TOKENS ============ */
   :root{
     --purple:#5A377F;
@@ -522,6 +528,8 @@
   .about-massive .stroke{
     color:transparent;
     -webkit-text-stroke:2px var(--bone);
+    font-family:'Drowner','Inter Tight',sans-serif;
+    font-weight:400;
   }
   @media (prefers-reduced-motion: no-preference){
     .about-massive .stroke{
@@ -568,7 +576,7 @@
     right:-26px;
     width:clamp(90px,8vw,140px);
     height:46px;
-    background-image:url('images/zine/tape-2.png');
+    background-image:url('images/zine/tape-black-3.png');
     background-size:contain;
     background-repeat:no-repeat;
     background-position:center;
@@ -714,8 +722,9 @@
     transform:translateX(-50%);
     width:92%;
     text-align:center;
-    font-weight:900;
-    font-style:italic;
+    font-family:'Drowner',var(--font-display,'Inter Tight'),sans-serif;
+    font-weight:400;
+    font-style:normal;
     font-size:clamp(32px,5vw,70px);
     line-height:1.0;
     letter-spacing:var(--tracking-tight);
@@ -818,7 +827,7 @@
     left:50%;
     width:clamp(100px,10vw,160px);
     height:48px;
-    background-image:url('images/zine/tape-1.png');
+    background-image:url('images/zine/tape-black-2.png');
     background-size:contain;
     background-repeat:no-repeat;
     background-position:center;
@@ -1070,8 +1079,8 @@
   </div>
 
   <div class="hero-image">
-    <img class="hero-tape t1" src="images/zine/tape-1.png" alt="" aria-hidden="true">
-    <img class="hero-tape t2" src="images/zine/tape-2.png" alt="" aria-hidden="true">
+    <img class="hero-tape t1" src="images/zine/tape-black-1.png" alt="" aria-hidden="true">
+    <img class="hero-tape t2" src="images/zine/tape-black-2.png" alt="" aria-hidden="true">
     <div class="hero-image-inner"></div>
   </div>
 
