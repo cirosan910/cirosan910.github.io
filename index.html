@@ -979,7 +979,7 @@
       width:auto;height:auto;
       background-size:cover;
       background-position:center;
-      filter:grayscale(1) contrast(1.08);
+      filter:saturate(1.05);
       z-index:0;
     }
     /* bottom darken for name legibility (both patterns) */
@@ -990,17 +990,16 @@
       z-index:1;
       pointer-events:none;
     }
-    /* PATTERN A — morado+negro: purple field, cover's black drops out (screen), logo floats on purple */
-    .idx-row:nth-child(odd){background:var(--purple)}
-    .idx-row:nth-child(odd) .idx-thumb{mix-blend-mode:screen;filter:grayscale(1) contrast(1.1) brightness(1.1)}
-    .idx-row:nth-child(odd)::after{background-image:linear-gradient(to top,rgba(45,26,64,0.7),rgba(45,26,64,0) 50%)}
+    /* Covers shown full-colour: brand identity intact, cohesion from layout + bottom scrim */
+    .idx-row:nth-child(odd){background:var(--purple-deep)}
+    .idx-row:nth-child(odd) .idx-thumb{mix-blend-mode:normal;filter:saturate(1.05)}
+    .idx-row:nth-child(odd)::after{background-image:linear-gradient(to top,rgba(10,10,11,0.82),rgba(10,10,11,0) 58%)}
     .idx-row:nth-child(odd) .idx-num,
     .idx-row:nth-child(odd) .idx-meta{color:var(--bone)}
-    /* PATTERN B — negro+morado: black field, full B&W cover, purple accents */
     .idx-row:nth-child(even){background:var(--ink)}
-    .idx-row:nth-child(even) .idx-thumb{filter:grayscale(1) contrast(1.12) brightness(0.95)}
+    .idx-row:nth-child(even) .idx-thumb{filter:saturate(1.05)}
     .idx-row:nth-child(even) .idx-num,
-    .idx-row:nth-child(even) .idx-meta{color:var(--purple-up);opacity:1}
+    .idx-row:nth-child(even) .idx-meta{color:var(--bone);opacity:1}
     .idx-num{
       position:absolute;top:24px;left:20px;
       z-index:2;min-width:auto;opacity:0.85;
