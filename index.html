@@ -303,51 +303,30 @@
     padding:6px 10px;
   }
 
-  /* retro-futurist robot (cabeza CRT) que sigue el mouse */
+  /* robot CRT en 3D real (Three.js) que gira siguiendo el mouse */
   .hero-robot{
     position:relative;
     z-index:2;
     width:100%;
     align-self:stretch;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    perspective:820px;
-    perspective-origin:50% 35%;
-    overflow:visible;
+    height:78vh;
+    max-height:720px;
+    min-height:420px;
   }
-  .hero-robot-tilt{
-    position:relative;
-    width:100%;
-    max-width:640px;
-    margin-top:auto;
-    transform-origin:50% 92%;
-    transform-style:preserve-3d;
-    transition:transform .28s cubic-bezier(.16,1,.3,1);
-    will-change:transform;
-  }
-  .hero-robot-img{transform:translateZ(0)}
-  .hero-robot-img{
-    display:block;
-    width:100%;
-    height:auto;
-    -webkit-mask-image:linear-gradient(to bottom,#000 58%,rgba(0,0,0,0) 97%);
-    mask-image:linear-gradient(to bottom,#000 58%,rgba(0,0,0,0) 97%);
-  }
-  .hero-robot-eyes{position:absolute;inset:0;pointer-events:none;transform:translateZ(36px);transform-style:preserve-3d}
-  .hero-robot-eyes .eye{
+  .hero-robot-canvas{
     position:absolute;
-    width:4.4%;
-    aspect-ratio:1;
-    border-radius:50%;
-    background:radial-gradient(circle at 50% 42%, #FBF7FF 0%, #E9D8FF 36%, #A876E6 70%, rgba(138,95,191,0) 100%);
-    box-shadow:0 0 13px 3px rgba(184,134,230,.9), 0 0 36px 11px rgba(138,95,191,.5);
-    transform:translate(calc(-50% + var(--ex,0px)), calc(-50% + var(--ey,0px)));
-    transition:transform .12s linear, opacity .4s ease;
-    will-change:transform;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
   }
-  .hero-robot-eyes .eye-l{left:43.4%;top:19.2%}
-  .hero-robot-eyes .eye-r{left:56.6%;top:19.2%}
+  .hero-robot-fade{
+    position:absolute;
+    left:0;right:0;bottom:0;
+    height:24%;
+    pointer-events:none;
+    background:linear-gradient(to bottom, rgba(90,55,127,0) 0%, var(--purple) 92%);
+  }
 
   /* purple spray stamp behind hero headline */
   .hero-stamp{
@@ -1132,13 +1111,8 @@
   </div>
   -->
   <div class="hero-robot" id="heroRobot" aria-hidden="true">
-    <div class="hero-robot-tilt" id="heroRobotTilt">
-      <img class="hero-robot-img" src="images/hero-robot.png" alt="" draggable="false">
-      <div class="hero-robot-eyes">
-        <span class="eye eye-l" id="eyeL"></span>
-        <span class="eye eye-r" id="eyeR"></span>
-      </div>
-    </div>
+    <canvas class="hero-robot-canvas" id="robotCanvas"></canvas>
+    <div class="hero-robot-fade"></div>
   </div>
 
   <div class="ghost ghost-hero"><img src="images/ghost-02.png" alt=""></div>
@@ -1466,49 +1440,128 @@
     });
   })();
 </script>
-<script>
-  /* Hero robot: glow eyes track the cursor + subtle body tilt (desktop),
-     gentle idle drift on touch / coarse pointers. Respects reduced-motion. */
-  (function(){
-    var tilt = document.getElementById('heroRobotTilt');
-    var eyeL = document.getElementById('eyeL');
-    var eyeR = document.getElementById('eyeR');
-    if(!tilt || !eyeL || !eyeR) return;
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    tilt.style.transition = 'none';
-    var fine = window.matchMedia('(pointer: fine)').matches;
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  /* Hero robot: modelo CRT 3D real (Three.js) que gira siguiendo el mouse,
+     ojos glow con bloom, idle en touch, pausa fuera de viewport. */
+  import * as THREE from 'three';
+  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-    var tx = 0, ty = 0, cx = 0, cy = 0; // target / current, normalized -1..1
+  const canvas = document.getElementById('robotCanvas');
+  if (canvas) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wrap = canvas.parentElement;
 
-    function setEye(ex, ey){
-      eyeL.style.setProperty('--ex', ex); eyeL.style.setProperty('--ey', ey);
-      eyeR.style.setProperty('--ex', ex); eyeR.style.setProperty('--ey', ey);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x5A377F);
+
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+    camera.position.set(0, 0.62, 5.9);
+    camera.lookAt(0, 0.52, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+    scene.add(new THREE.AmbientLight(0xb8a6d6, 0.7));
+    const key = new THREE.DirectionalLight(0xffffff, 1.0);
+    key.position.set(-3, 4, 4); scene.add(key);
+    const rim = new THREE.DirectionalLight(0x8B5FBF, 0.85);
+    rim.position.set(4, 1, -3); scene.add(rim);
+
+    const bone = new THREE.MeshStandardMaterial({ color: 0xDED8CC, roughness: 0.74, metalness: 0.05 });
+    const purpleMat = new THREE.MeshStandardMaterial({ color: 0x5A377F, roughness: 0.86 });
+    const purpleDark = new THREE.MeshStandardMaterial({ color: 0x3D1F5C, roughness: 0.85 });
+    const screenMat = new THREE.MeshStandardMaterial({ color: 0x14091F, roughness: 0.35, metalness: 0.2 });
+    const shirt = new THREE.MeshStandardMaterial({ color: 0xCFC8DA, roughness: 0.82 });
+    const eyeMat = new THREE.MeshStandardMaterial({ color: 0xF1E6FF, emissive: 0xCBA6FF, emissiveIntensity: 3.4 });
+
+    const robot = new THREE.Group();
+
+    const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.82, 1.15, 1.95, 24), purpleMat);
+    torso.position.y = -0.98; robot.add(torso);
+    const shoulders = new THREE.Mesh(new THREE.CapsuleGeometry(0.33, 1.35, 6, 16), purpleMat);
+    shoulders.rotation.z = Math.PI / 2; shoulders.position.y = 0.02; robot.add(shoulders);
+    const collar = new THREE.Mesh(new THREE.ConeGeometry(0.34, 0.7, 4), shirt);
+    collar.position.set(0, -0.46, 0.42); collar.rotation.x = Math.PI; collar.rotation.y = Math.PI / 4; robot.add(collar);
+    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 0.4, 16), purpleDark);
+    neck.position.y = 0.45; robot.add(neck);
+
+    const head = new THREE.Group();
+    head.position.y = 1.25;
+    head.add(new THREE.Mesh(new THREE.BoxGeometry(1.55, 1.4, 1.25), bone));
+    const screen = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.92, 0.08), screenMat);
+    screen.position.set(0, 0.12, 0.62); head.add(screen);
+    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.05), purpleDark);
+    slot.position.set(0.25, -0.5, 0.63); head.add(slot);
+    const eyeGeo = new THREE.SphereGeometry(0.11, 24, 24);
+    const eL = new THREE.Mesh(eyeGeo, eyeMat); eL.position.set(-0.26, 0.16, 0.69);
+    const eR = new THREE.Mesh(eyeGeo, eyeMat); eR.position.set(0.26, 0.16, 0.69);
+    head.add(eL, eR);
+    const eyeLight = new THREE.PointLight(0xB98CFF, 1.1, 4);
+    eyeLight.position.set(0, 0.16, 1.2); head.add(eyeLight);
+    robot.add(head);
+
+    robot.position.y = 0.1;
+    scene.add(robot);
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.95, 0.5, 0.85));
+
+    function resize() {
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      composer.setSize(w, h);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
     }
-    function loop(){
-      cx += (tx - cx) * 0.10;
-      cy += (ty - cy) * 0.10;
-      var eMax = tilt.getBoundingClientRect().width * 0.016;
-      setEye((cx * eMax).toFixed(2) + 'px', (cy * eMax * 0.7).toFixed(2) + 'px');
-      tilt.style.transform = 'rotateY(' + (cx * 13).toFixed(2) + 'deg) rotateX(' + (-cy * 8).toFixed(2) + 'deg) translateZ(0)';
-      requestAnimationFrame(loop);
-    }
+    resize();
+    addEventListener('resize', resize);
 
-    if(fine){
-      window.addEventListener('mousemove', function(e){
-        tx = Math.max(-1, Math.min(1, (e.clientX / window.innerWidth) * 2 - 1));
-        ty = Math.max(-1, Math.min(1, (e.clientY / window.innerHeight) * 2 - 1));
+    const fine = matchMedia('(pointer: fine)').matches;
+    let tx = 0, ty = 0, rx = 0, ry = 0;
+    const t0 = performance.now();
+    if (fine) {
+      addEventListener('mousemove', (e) => {
+        tx = (e.clientX / innerWidth) * 2 - 1;
+        ty = (e.clientY / innerHeight) * 2 - 1;
       }, { passive: true });
-    } else {
-      var t0 = performance.now();
-      (function idle(){
-        var s = (performance.now() - t0) / 1000;
-        tx = Math.sin(s * 0.7) * 0.7;
-        ty = Math.sin(s * 0.45 + 1) * 0.4;
-        requestAnimationFrame(idle);
-      })();
     }
-    requestAnimationFrame(loop);
-  })();
+
+    let visible = true;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.01 }).observe(canvas);
+    }
+
+    function render() {
+      requestAnimationFrame(render);
+      if (!visible) return;
+      if (!reduce) {
+        if (!fine) {
+          const s = (performance.now() - t0) / 1000;
+          tx = Math.sin(s * 0.5) * 0.85;
+          ty = Math.sin(s * 0.33 + 1) * 0.22;
+        }
+        ry += (tx * 0.62 - ry) * 0.08;
+        rx += (ty * 0.30 - rx) * 0.08;
+        robot.rotation.y = ry;
+        robot.rotation.x = rx * 0.5;
+        head.rotation.y = ry * 0.35;
+        head.rotation.x = rx * 0.6;
+      }
+      composer.render();
+    }
+    render();
+  }
 </script>
 <script src="i18n.js"></script>
 
