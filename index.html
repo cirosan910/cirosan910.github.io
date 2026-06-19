@@ -154,7 +154,7 @@
     overflow:hidden;
     background:var(--purple);
   }
-  .hero-left{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:20px 0}
+  .hero-left{position:relative;z-index:3;display:flex;flex-direction:column;justify-content:space-between;padding:20px 0}
 
   .hero-slogan{
     margin:auto 0;
@@ -303,30 +303,23 @@
     padding:6px 10px;
   }
 
-  /* robot CRT en 3D real (Three.js) que gira siguiendo el mouse */
-  .hero-robot{
+  /* ojo 3D hiperrealista que sigue el mouse */
+  .hero-eye{
     position:relative;
     z-index:2;
     width:100%;
-    align-self:stretch;
-    height:78vh;
-    max-height:720px;
-    min-height:420px;
+    align-self:center;
+    min-height:60vh;
+    overflow:hidden;
   }
-  .hero-robot-canvas{
+  .hero-eye canvas{
     position:absolute;
     inset:0;
     width:100%;
     height:100%;
     display:block;
   }
-  .hero-robot-fade{
-    position:absolute;
-    left:0;right:0;bottom:0;
-    height:24%;
-    pointer-events:none;
-    background:linear-gradient(to bottom, rgba(90,55,127,0) 0%, var(--purple) 92%);
-  }
+  .hero-eye-vignette{display:none}
 
   /* purple spray stamp behind hero headline */
   .hero-stamp{
@@ -1110,9 +1103,9 @@
     </div>
   </div>
   -->
-  <div class="hero-robot" id="heroRobot" aria-hidden="true">
-    <canvas class="hero-robot-canvas" id="robotCanvas"></canvas>
-    <div class="hero-robot-fade"></div>
+  <div class="hero-eye" id="heroEye" aria-hidden="true">
+    <canvas id="eyeCanvas"></canvas>
+    <div class="hero-eye-vignette"></div>
   </div>
 
   <div class="ghost ghost-hero"><img src="images/ghost-02.png" alt=""></div>
@@ -1449,116 +1442,168 @@
 }
 </script>
 <script type="module">
-  /* Hero robot: modelo CRT 3D real (Three.js) que gira siguiendo el mouse,
-     ojos glow con bloom, idle en touch, pausa fuera de viewport. */
+  /* Hero eye: esfera 3D flotante con iris morado, sigue el mouse */
   import * as THREE from 'three';
-  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-  const canvas = document.getElementById('robotCanvas');
+  const canvas = document.getElementById('eyeCanvas');
   if (canvas) {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const wrap = canvas.parentElement;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x5A377F);
 
-    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-    camera.position.set(0, 0.62, 5.9);
-    camera.lookAt(0, 0.52, 0);
+    const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
+    camera.position.set(0, 0, 5.2);
+    camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.toneMapping = THREE.NoToneMapping;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    scene.add(new THREE.AmbientLight(0xb8a6d6, 0.7));
-    const key = new THREE.DirectionalLight(0xffffff, 1.0);
-    key.position.set(-3, 4, 4); scene.add(key);
-    const rim = new THREE.DirectionalLight(0x8B5FBF, 0.85);
-    rim.position.set(4, 1, -3); scene.add(rim);
+    /* lighting */
+    scene.add(new THREE.AmbientLight(0xd4c4ee, 0.6));
+    const key = new THREE.DirectionalLight(0xffffff, 1.1);
+    key.position.set(-2, 3, 5); scene.add(key);
+    const rim = new THREE.DirectionalLight(0x8B5FBF, 0.6);
+    rim.position.set(3, -1, -2); scene.add(rim);
+    const fill = new THREE.DirectionalLight(0x5A377F, 0.3);
+    fill.position.set(-3, -2, 2); scene.add(fill);
 
-    const bone = new THREE.MeshStandardMaterial({ color: 0xDED8CC, roughness: 0.74, metalness: 0.05 });
-    const purpleMat = new THREE.MeshStandardMaterial({ color: 0x5A377F, roughness: 0.86 });
-    const purpleDark = new THREE.MeshStandardMaterial({ color: 0x3D1F5C, roughness: 0.85 });
-    const screenMat = new THREE.MeshStandardMaterial({ color: 0x14091F, roughness: 0.35, metalness: 0.2 });
-    const shirt = new THREE.MeshStandardMaterial({ color: 0xCFC8DA, roughness: 0.82 });
-    const eyeMat = new THREE.MeshStandardMaterial({ color: 0xF1E6FF, emissive: 0xCBA6FF, emissiveIntensity: 3.4 });
+    /* eyeball */
+    const eye = new THREE.Group();
 
-    const robot = new THREE.Group();
+    /* sclera (white sphere) */
+    const scleraGeo = new THREE.SphereGeometry(1, 64, 64);
+    const scleraMat = new THREE.MeshPhysicalMaterial({
+      color: 0xF0E8E0, roughness: 0.5, metalness: 0,
+      clearcoat: 0.4, clearcoatRoughness: 0.3
+    });
+    eye.add(new THREE.Mesh(scleraGeo, scleraMat));
 
-    const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.82, 1.15, 1.95, 24), purpleMat);
-    torso.position.y = -0.98; robot.add(torso);
-    const shoulders = new THREE.Mesh(new THREE.CapsuleGeometry(0.33, 1.35, 6, 16), purpleMat);
-    shoulders.rotation.z = Math.PI / 2; shoulders.position.y = 0.02; robot.add(shoulders);
-    const collar = new THREE.Mesh(new THREE.ConeGeometry(0.34, 0.7, 4), shirt);
-    collar.position.set(0, -0.46, 0.42); collar.rotation.x = Math.PI; collar.rotation.y = Math.PI / 4; robot.add(collar);
-    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 0.4, 16), purpleDark);
-    neck.position.y = 0.45; robot.add(neck);
+    /* iris shader */
+    const irisGeo = new THREE.CircleGeometry(0.42, 128);
+    const irisMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uPupilSize: { value: 0.32 },
+        uColor1: { value: new THREE.Color(0x3D1F5C) },
+        uColor2: { value: new THREE.Color(0x5A377F) },
+        uColor3: { value: new THREE.Color(0x8B5FBF) },
+        uHighlight: { value: new THREE.Color(0xCBA6FF) }
+      },
+      vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+      fragmentShader: `
+        uniform float uTime, uPupilSize;
+        uniform vec3 uColor1, uColor2, uColor3, uHighlight;
+        varying vec2 vUv;
+        float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+        void main(){
+          vec2 c = vUv - 0.5;
+          float dist = length(c) * 2.0;
+          float angle = atan(c.y, c.x);
+          float pupil = smoothstep(uPupilSize, uPupilSize - 0.08, dist);
+          float fibers = 0.0;
+          for(float i=0.;i<3.;i++){
+            float f = sin(angle*(60.+i*31.) + hash(vec2(i,0.))*6.28)*.5+.5;
+            f *= smoothstep(.88,.4,dist)*smoothstep(uPupilSize-.02,uPupilSize+.12,dist);
+            fibers += f*(.3-i*.08);
+          }
+          float t = smoothstep(uPupilSize, .95, dist);
+          vec3 col = mix(uColor1, uColor2, t);
+          col = mix(col, uColor3, fibers*.6);
+          col = mix(col, uColor1*.3, smoothstep(.85,.98,dist)*.7);
+          float ring = smoothstep(uPupilSize+.02,uPupilSize+.08,dist)*smoothstep(uPupilSize+.18,uPupilSize+.08,dist);
+          col += uHighlight * ring * .35;
+          col = mix(col, vec3(.01), pupil);
+          float outer = smoothstep(1.,.96,dist);
+          gl_FragColor = vec4(col, outer);
+        }
+      `,
+      transparent: true
+    });
+    const iris = new THREE.Mesh(irisGeo, irisMat);
+    iris.position.z = 1.06;
+    eye.add(iris);
 
-    const head = new THREE.Group();
-    head.position.y = 1.25;
-    head.add(new THREE.Mesh(new THREE.BoxGeometry(1.55, 1.4, 1.25), bone));
-    const screen = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.92, 0.08), screenMat);
-    screen.position.set(0, 0.12, 0.62); head.add(screen);
-    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.05), purpleDark);
-    slot.position.set(0.25, -0.5, 0.63); head.add(slot);
-    const eyeGeo = new THREE.SphereGeometry(0.11, 24, 24);
-    const eL = new THREE.Mesh(eyeGeo, eyeMat); eL.position.set(-0.26, 0.16, 0.69);
-    const eR = new THREE.Mesh(eyeGeo, eyeMat); eR.position.set(0.26, 0.16, 0.69);
-    head.add(eL, eR);
-    const eyeLight = new THREE.PointLight(0xB98CFF, 1.1, 4);
-    eyeLight.position.set(0, 0.16, 1.2); head.add(eyeLight);
-    robot.add(head);
+    /* specular highlights */
+    const specMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 });
+    const spec = new THREE.Mesh(new THREE.CircleGeometry(0.065, 32), specMat);
+    spec.position.set(-0.13, 0.15, 1.12);
+    eye.add(spec);
+    const spec2 = new THREE.Mesh(new THREE.CircleGeometry(0.028, 16), specMat.clone());
+    spec2.material.opacity = 0.45;
+    spec2.position.set(0.07, -0.07, 1.12);
+    eye.add(spec2);
 
-    robot.position.y = 0.1;
-    scene.add(robot);
+    scene.add(eye);
 
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.95, 0.5, 0.85));
-
-    function resize() {
+    /* resize */
+    function resize(){
       const w = wrap.clientWidth, h = wrap.clientHeight;
-      if (!w || !h) return;
+      if(!w||!h) return;
       renderer.setSize(w, h, false);
-      composer.setSize(w, h);
-      camera.aspect = w / h; camera.updateProjectionMatrix();
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
     }
     resize();
     addEventListener('resize', resize);
 
-    const fine = matchMedia('(pointer: fine)').matches;
-    let tx = 0, ty = 0, rx = 0, ry = 0;
+    /* mouse */
+    const fine = matchMedia('(pointer:fine)').matches;
+    let tx=0, ty=0, cx=0, cy=0;
     const t0 = performance.now();
-    if (fine) {
-      addEventListener('mousemove', (e) => {
-        tx = (e.clientX / innerWidth) * 2 - 1;
-        ty = (e.clientY / innerHeight) * 2 - 1;
-      }, { passive: true });
+    if(fine){
+      addEventListener('mousemove', e => {
+        tx = (e.clientX/innerWidth)*2-1;
+        ty = -(e.clientY/innerHeight)*2+1;
+      }, {passive:true});
     }
+
+    /* saccade */
+    let saccX=0, saccY=0, saccTimer=2+Math.random()*3, saccDecay=0;
+    /* pupil */
+    let pupilTarget=0.32, pupilCurrent=0.32;
 
     let visible = true;
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.01 }).observe(canvas);
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(es => { visible=es[0].isIntersecting; }, {threshold:0.01}).observe(canvas);
     }
 
-    function render() {
+    function render(){
       requestAnimationFrame(render);
-      if (!visible) return;
-      if (!reduce) {
-        if (!fine) {
-          const s = (performance.now() - t0) / 1000;
-          tx = Math.sin(s * 0.5) * 0.85;
-          ty = Math.sin(s * 0.33 + 1) * 0.22;
+      if(!visible) return;
+      const dt = 1/60;
+      const elapsed = (performance.now()-t0)/1000;
+
+      if(!reduce){
+        if(!fine){
+          tx = Math.sin(elapsed*0.4)*0.5;
+          ty = Math.sin(elapsed*0.27+1.2)*0.25;
         }
-        ry += (tx * 0.62 - ry) * 0.08;
-        rx += (ty * 0.30 - rx) * 0.08;
-        robot.rotation.y = ry;
-        robot.rotation.x = rx * 0.5;
-        head.rotation.y = ry * 0.35;
-        head.rotation.x = rx * 0.6;
+        cx += (tx-cx)*0.06;
+        cy += (ty-cy)*0.06;
+
+        saccTimer -= dt;
+        if(saccTimer<=0){ saccX=(Math.random()-.5)*.08; saccY=(Math.random()-.5)*.05; saccDecay=1; saccTimer=2+Math.random()*4; }
+        saccDecay *= 0.9;
+
+        eye.rotation.y = cx*0.22 + saccX*saccDecay;
+        eye.rotation.x = cy*0.15 + saccY*saccDecay;
+
+        const md = Math.sqrt(tx*tx+ty*ty);
+        pupilTarget = 0.28+(1-Math.min(md,1))*0.12;
+        pupilCurrent += (pupilTarget-pupilCurrent)*0.04;
+        irisMat.uniforms.uPupilSize.value = pupilCurrent;
+
+        spec.position.x = -0.13+cx*0.06;
+        spec.position.y = 0.15+cy*0.04;
+        spec2.position.x = 0.07+cx*0.04;
+        spec2.position.y = -0.07+cy*0.03;
       }
-      composer.render();
+      irisMat.uniforms.uTime.value = elapsed;
+      renderer.render(scene, camera);
     }
     render();
   }
@@ -1577,6 +1622,26 @@
   .ciro-chat-trigger:hover{transform:scale(1.08);filter:drop-shadow(0 0 14px rgba(90,55,127,1)) drop-shadow(0 0 32px rgba(90,55,127,.7)) drop-shadow(0 0 56px rgba(90,55,127,.4))}
   .ciro-chat-trigger.open{transform:scale(0);pointer-events:none}
   .ciro-chat-trigger img{width:100%;height:auto;display:block}
+  .ciro-chat-bubble{
+    position:absolute;bottom:100%;right:0;margin-bottom:10px;
+    background:var(--bone);color:var(--ink);
+    font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:600;
+    padding:8px 14px;border-radius:12px;white-space:nowrap;
+    box-shadow:0 4px 16px rgba(0,0,0,.15);
+    opacity:0;transform:translateY(8px) scale(0.9);
+    animation:chatBubbleIn .5s cubic-bezier(.16,1,.3,1) 2s forwards;
+    pointer-events:none;
+  }
+  .ciro-chat-bubble::after{
+    content:'';position:absolute;bottom:-6px;right:20px;
+    width:12px;height:12px;background:var(--bone);
+    transform:rotate(45deg);border-radius:2px;
+  }
+  .ciro-chat-trigger.open .ciro-chat-bubble{display:none}
+  @keyframes chatBubbleIn{
+    0%{opacity:0;transform:translateY(8px) scale(0.9)}
+    100%{opacity:1;transform:translateY(0) scale(1)}
+  }
 
   .ciro-chat-panel{
     position:fixed;bottom:24px;right:24px;z-index:9001;
@@ -1654,6 +1719,7 @@
 </style>
 
 <div class="ciro-chat-trigger" id="chatTrigger" title="Ask Ciro's AI">
+  <div class="ciro-chat-bubble">talk to me</div>
   <img src="images/ciro-head.png" alt="Chat with Ciro" loading="lazy">
 </div>
 
