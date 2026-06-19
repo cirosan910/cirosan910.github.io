@@ -1719,7 +1719,7 @@
 </style>
 
 <div class="ciro-chat-trigger" id="chatTrigger" title="Ask Ciro's AI">
-  <div class="ciro-chat-bubble">talk to me</div>
+  <div class="ciro-chat-bubble" data-i18n="chat.bubble">talk to me</div>
   <img src="images/ciro-head.png" alt="Chat with Ciro" loading="lazy">
 </div>
 
@@ -1727,17 +1727,17 @@
   <div class="ciro-chat-header">
     <img src="images/ciro-head.png" alt="">
     <div class="hdr-info">
-      <div class="hdr-name">cirosan AI</div>
-      <div class="hdr-status">online</div>
+      <div class="hdr-name" data-i18n="chat.name">cirosan AI</div>
+      <div class="hdr-status" data-i18n="chat.status">online</div>
     </div>
     <button class="ciro-chat-close" id="chatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="ciro-chat-messages" id="chatMessages">
-    <div class="ciro-msg bot">Hey! I'm Ciro's AI. Ask me anything about his work, projects, or how to get in touch.</div>
+    <div class="ciro-msg bot" data-i18n="chat.greeting">Hey! I'm Ciro's AI. Ask me anything about his work, projects, or how to get in touch.</div>
   </div>
   <form class="ciro-chat-input" id="chatForm">
-    <input type="text" id="chatInput" placeholder="Ask me something..." autocomplete="off">
-    <button type="submit">Send</button>
+    <input type="text" id="chatInput" data-i18n-ph="chat.placeholder" placeholder="Ask me something..." autocomplete="off">
+    <button type="submit" data-i18n="chat.send">Send</button>
   </form>
 </div>
 
@@ -1752,6 +1752,8 @@
   var msgs = document.getElementById('chatMessages');
   var history = [];
   var busy = false;
+  function t(k){var l=document.documentElement.getAttribute('lang')||'en';var D=window.I18N||{};return (D[l]&&D[l][k])||(D.en&&D.en[k])||'';}
+
 
   function toggle(open){
     trigger.classList.toggle('open', open);
@@ -1781,7 +1783,7 @@
     addMsg(text, 'user');
     history.push({ role: 'user', content: text });
 
-    var typing = addMsg('thinking...', 'bot typing');
+    var typing = addMsg(t('chat.thinking'), 'bot typing');
 
     try {
       var resp = await fetch(API, {
@@ -1796,11 +1798,11 @@
         addMsg(data.reply, 'bot');
         history.push({ role: 'assistant', content: data.reply });
       } else {
-        addMsg(data.error || 'Something went wrong. Try again.', 'bot');
+        addMsg(data.error || t('chat.error'), 'bot');
       }
     } catch(err){
       typing.remove();
-      addMsg('Connection error. Try again later.', 'bot');
+      addMsg(t('chat.offline'), 'bot');
     }
 
     busy = false;

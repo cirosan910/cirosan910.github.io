@@ -129,7 +129,17 @@ window.I18N = {
     "lp.b4": "Contrast pushed to the limit: deep black, frozen blue, with the jersey's stripes cutting clean through every composition.",
     "lp.b5": "Designed for <strong>campaign, social and broadcast</strong>: a look that scales without softening.",
     "lp.b6": "Spec work that <strong>reached the players</strong>. They saw it. That's the validation that mattered.",
-    "lp.r1": "Ice-texture visual system", "lp.r2": "Campaign, social, broadcast", "lp.r3": "Reached the players"
+    "lp.r1": "Ice-texture visual system", "lp.r2": "Campaign, social, broadcast", "lp.r3": "Reached the players",
+    "chat.bubble": "talk to me",
+    "chat.title": "Ask Ciro's AI",
+    "chat.name": "cirosan AI",
+    "chat.status": "online",
+    "chat.greeting": "Hey! I'm Ciro's AI. Ask me anything about his work, projects, or how to get in touch.",
+    "chat.placeholder": "Ask me something...",
+    "chat.send": "Send",
+    "chat.thinking": "thinking...",
+    "chat.error": "Something went wrong. Try again.",
+    "chat.offline": "Connection error. Try again later."
   },
   es: {
     "nav.work": "01 · Trabajo",
@@ -260,7 +270,17 @@ window.I18N = {
     "lp.b4": "Contraste al límite: negro profundo, azul congelado, con las franjas de la camiseta cortando cada composición.",
     "lp.b5": "Pensada para <strong>campaña, redes y transmisión</strong>: una estética que escala sin ablandarse.",
     "lp.b6": "Spec work que <strong>llegó a los jugadores</strong>. Lo vieron. Esa fue la validación que importaba.",
-    "lp.r1": "Sistema visual de hielo", "lp.r2": "Campaña, redes, transmisión", "lp.r3": "Llegó a los jugadores"
+    "lp.r1": "Sistema visual de hielo", "lp.r2": "Campaña, redes, transmisión", "lp.r3": "Llegó a los jugadores",
+    "chat.bubble": "hablame",
+    "chat.title": "Preguntale a la IA de Ciro",
+    "chat.name": "cirosan IA",
+    "chat.status": "en linea",
+    "chat.greeting": "Hola! Soy la IA de Ciro. Preguntame lo que quieras sobre su trabajo, proyectos o como contactarlo.",
+    "chat.placeholder": "Preguntame algo...",
+    "chat.send": "Enviar",
+    "chat.thinking": "pensando...",
+    "chat.error": "Algo salio mal. Intenta de nuevo.",
+    "chat.offline": "Error de conexion. Intenta mas tarde."
   }
 };
 
