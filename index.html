@@ -1474,7 +1474,7 @@
     /* sclera (white sphere) */
     const scleraGeo = new THREE.SphereGeometry(1, 64, 64);
     const scleraMat = new THREE.MeshPhysicalMaterial({
-      color: 0xF0E8E0, roughness: 0.5, metalness: 0,
+      color: 0xFFFFFF, roughness: 0.5, metalness: 0,
       clearcoat: 0.4, clearcoatRoughness: 0.3
     });
     eye.add(new THREE.Mesh(scleraGeo, scleraMat));
@@ -1485,10 +1485,10 @@
       uniforms: {
         uTime: { value: 0 },
         uPupilSize: { value: 0.32 },
-        uColor1: { value: new THREE.Color(0x3D1F5C) },
+        uColor1: { value: new THREE.Color(0x5A377F) },
         uColor2: { value: new THREE.Color(0x5A377F) },
-        uColor3: { value: new THREE.Color(0x8B5FBF) },
-        uHighlight: { value: new THREE.Color(0xCBA6FF) }
+        uColor3: { value: new THREE.Color(0x6E4B96) },
+        uHighlight: { value: new THREE.Color(0x8B5FBF) }
       },
       vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
       fragmentShader: `
