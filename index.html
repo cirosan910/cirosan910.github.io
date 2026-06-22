@@ -1485,10 +1485,10 @@
       uniforms: {
         uTime: { value: 0 },
         uPupilSize: { value: 0.32 },
-        uColor1: { value: new THREE.Color(0x5A377F) },
+        uColor1: { value: new THREE.Color(0x2A1640) },
         uColor2: { value: new THREE.Color(0x5A377F) },
-        uColor3: { value: new THREE.Color(0x6E4B96) },
-        uHighlight: { value: new THREE.Color(0x8B5FBF) }
+        uColor3: { value: new THREE.Color(0x8B5FBF) },
+        uHighlight: { value: new THREE.Color(0xB98CFF) }
       },
       vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
       fragmentShader: `
@@ -1513,7 +1513,7 @@
           col = mix(col, uColor1*.3, smoothstep(.85,.98,dist)*.7);
           float ring = smoothstep(uPupilSize+.02,uPupilSize+.08,dist)*smoothstep(uPupilSize+.18,uPupilSize+.08,dist);
           col += uHighlight * ring * .35;
-          col = mix(col, vec3(0.29,0.18,0.42), pupil);
+          col = mix(col, vec3(0.03,0.0,0.06), pupil);
           float outer = smoothstep(1.,.96,dist);
           gl_FragColor = vec4(col, outer);
         }
