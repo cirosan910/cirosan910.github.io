@@ -1460,12 +1460,12 @@
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     /* lighting */
-    scene.add(new THREE.AmbientLight(0xd4c4ee, 0.6));
-    const key = new THREE.DirectionalLight(0xffffff, 1.1);
+    scene.add(new THREE.AmbientLight(0xF4EEFF, 1.05));
+    const key = new THREE.DirectionalLight(0xffffff, 0.55);
     key.position.set(-2, 3, 5); scene.add(key);
-    const rim = new THREE.DirectionalLight(0x8B5FBF, 0.6);
+    const rim = new THREE.DirectionalLight(0xC9B3E6, 0.3);
     rim.position.set(3, -1, -2); scene.add(rim);
-    const fill = new THREE.DirectionalLight(0x5A377F, 0.3);
+    const fill = new THREE.DirectionalLight(0x8B5FBF, 0.22);
     fill.position.set(-3, -2, 2); scene.add(fill);
 
     /* eyeball */
@@ -1513,7 +1513,7 @@
           col = mix(col, uColor1*.3, smoothstep(.85,.98,dist)*.7);
           float ring = smoothstep(uPupilSize+.02,uPupilSize+.08,dist)*smoothstep(uPupilSize+.18,uPupilSize+.08,dist);
           col += uHighlight * ring * .35;
-          col = mix(col, vec3(.01), pupil);
+          col = mix(col, vec3(0.29,0.18,0.42), pupil);
           float outer = smoothstep(1.,.96,dist);
           gl_FragColor = vec4(col, outer);
         }
